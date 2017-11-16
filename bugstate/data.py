@@ -9,18 +9,18 @@ bad_status = [
     'INSUFFICIENT_DATA'
 ]
 
-# Versions in their HTML coding to be used as a parameter for url_to_query function.
+# RHOSP versions as coded into BZ.
 versions = [
-    '10.0%20%28Newton%29',
-    '11.0%20%28Ocata%29',
-    '12.0%20%28Pike%29&',
-    '13.0%20%28Queens%29&',
+    '10.0 (Newton)',
+    '11.0 (Ocata)',
+    '12.0 (Pike)'
 ]
 
 # Main BZ URL
 URL = 'bugzilla.redhat.com'
 
-# These are the only needed fields. Less fields is less taxing on BZ. ID must remain.
+# These are the only needed fields.
+# Less fields is less taxing on BZ. ID must remain.
 include_fields = [
     'id',
     'creation_time',
