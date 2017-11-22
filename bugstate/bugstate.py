@@ -2,7 +2,7 @@ from __future__ import print_function
 from bugzilla import RHBugzilla
 
 # Local helpers
-import funtions
+import functions
 import data
 
 
@@ -34,12 +34,19 @@ for version in data.versions:
     for bug in bugs:
         if bug.status in 'CLOSED' and bug.resolution not in data.bad_status:
             closed_bugs += 1
-            delta = funtions.get_delta(bug.creation_time.value,
-                                       bug.last_change_time.value)
+            delta = functions.get_delta(bug.creation_time.value,
+                                        bug.last_change_time.value)
             time_to_close += delta
 
+        hist_time = functions.get_status_times(bug.get_history_raw())
+        # TODO:
+        # new_to_on_qa = functions.get_new_to_on_qa(hist_time)
+        for state_time, bug_state in hist_time.items():
+            print ('Bug ID - {}; Status - {}; timestamp - {}'.format(
+                bug.id, bug_state, state_time))
+
     if closed_bugs > 0:
-        average_time = funtions.get_average_time(time_to_close,
-                                                 closed_bugs,
-                                                 version)
+        average_time = functions.get_average_time(time_to_close,
+                                                  closed_bugs,
+                                                  version)
         print (average_time)
