@@ -1,47 +1,49 @@
 from datetime import datetime
-from collections import OrderedDict
 
 from data import bug_status
 
 
 # Returns a datetime from the time format used by BZ.
-def _get_datetime(bz_time):
+def get_datetime(bz_time):
     dt = datetime.strptime(bz_time, '%Y%m%dT%H:%M:%S')
     return dt
 
 
-# Returns time delta as int.
-def get_delta(status_a, status_b):
-    a = _get_datetime(status_a)
-    b = _get_datetime(status_b)
-    delta = int(b.strftime('%s')) - int(a.strftime('%s'))
-    return delta
+# Returns an int representation of a datetime.
+def get_int_datetime(dt):
+    return int(dt.strftime('%s'))
 
 
-# Returns the average time to close a bug message.
-def get_average_time(time_to_close, closed_bugs, version):
-    average = datetime.fromtimestamp(time_to_close / closed_bugs)
-    years = (eval(average.strftime('%Y')) - 1970)
+# Returns average time message.
+def get_average_time_msg(change_time, closed_bugs, msg):
+    average = datetime.fromtimestamp(change_time / closed_bugs)
+    # years = (eval(average.strftime('%Y')) - 1970)
     months = average.strftime('%m')
     days = average.strftime('%d')
     message = (
-        'On average it took {} years, {} months and {} days '
-        'to close a bug in rhosp {}.').format(
-            years, months, days, version)
+        'On average it took {} months and {} days {}.').format(
+        months, days, msg)
     return message
 
 
 # Returns a dict of time and status per bug.
 def get_status_times(raw_history):
-    status_change = {}
+    status_time = {}
     for events in raw_history['bugs']:
         for event in events['history']:
             for change in event['changes']:
                 for status in bug_status:
-                    if status == change['removed']:
-                        event_time = _get_datetime(event['when'].value)
-                        status_change[int(event_time.strftime('%s'))] = status
-    return OrderedDict(sorted(status_change.items()))
+                    if status == change['added']:
+                        event_time = get_datetime(event['when'].value)
+                        status_time[status] = int(event_time.strftime('%s'))
+    return status_time
 
 
 # Return the delta for a bug to reach from new to on_qa.
+def get_state_time_delta(hist_times, from_state, to_state):
+    t = 0
+    for time, state in hist_times.items():
+        if state == from_state:
+            t = time
+        if state == to_state:
+            return time - t

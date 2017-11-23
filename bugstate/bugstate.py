@@ -1,4 +1,5 @@
 from __future__ import print_function
+from sys import stdout
 from bugzilla import RHBugzilla
 
 # Local helpers
@@ -25,28 +26,56 @@ for version in data.versions:
     # This is where BZ is being queried.
     bugs = bz_q.query(q)
 
-    # A couple of integers to help calculate average time.
+    # Some integers to help calculate times.
+    on_qa_bugs = 0
+    verified_bugs = 0
     closed_bugs = 0
+
+    time_to_on_qa = 0
+    time_to_verify = 0
     time_to_close = 0
 
-    print ('Total number of bugs opened in {} is {}'.format(
-        version, len(bugs)))
+    average_on_qa_time = 0
+    average_verify_time = 0
+    average_close_time = 0
+
+    print ('Version {}:'.format(version))
+    num_bugs = len(bugs)
+    counter = 1
     for bug in bugs:
-        if bug.status in 'CLOSED' and bug.resolution not in data.bad_status:
+        stdout.write('\rWorking on bug {} out of {}'.format(counter, num_bugs))
+        status_times = functions.get_status_times(bug.get_history_raw())
+        new_time = functions.get_datetime(bug.creation_time.value)
+        int_new_time = functions.get_int_datetime(new_time)
+        status_times['NEW'] = int_new_time
+
+        if 'ON_QA' in status_times.keys():
+            on_qa_bugs += 1
+            time_to_on_qa += (status_times['ON_QA'] - status_times['NEW'])
+
+        # Bugs that skip ON_QA are not used.
+        if 'VERIFIED' in status_times.keys() and 'ON_QA' in status_times.keys():
+            verified_bugs += 1
+            time_to_verify += (status_times['VERIFIED'] - status_times['ON_QA'])
+
+        # Bugs that were closed due to an issue with the bug are not used.
+        if 'CLOSED' in status_times.keys() and bug.resolution not in data.bad_status:
             closed_bugs += 1
-            delta = functions.get_delta(bug.creation_time.value,
-                                        bug.last_change_time.value)
-            time_to_close += delta
+            time_to_close += (status_times['CLOSED'] - status_times['NEW'])
 
-        hist_time = functions.get_status_times(bug.get_history_raw())
-        # TODO:
-        # new_to_on_qa = functions.get_new_to_on_qa(hist_time)
-        for state_time, bug_state in hist_time.items():
-            print ('Bug ID - {}; Status - {}; timestamp - {}'.format(
-                bug.id, bug_state, state_time))
+        stdout.flush()
+        counter += 1
 
+    stdout.write('\n')
+    if on_qa_bugs > 0:
+        average_on_qa_msg = functions.get_average_time_msg(
+            time_to_on_qa, on_qa_bugs, 'for a bug to reach ON_QA')
+        print (average_on_qa_msg)
+    if verified_bugs > 0:
+        average_verify_msg = functions.get_average_time_msg(
+            time_to_verify, verified_bugs, 'for ON_QA bugs to be verified')
+        print (average_verify_msg)
     if closed_bugs > 0:
-        average_time = functions.get_average_time(time_to_close,
-                                                  closed_bugs,
-                                                  version)
-        print (average_time)
+        average_close_msg = functions.get_average_time_msg(
+            time_to_close, closed_bugs, 'for a bug to be closed')
+        print (average_close_msg)
