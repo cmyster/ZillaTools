@@ -40,11 +40,10 @@ for dfg in data.dfgs:
         average_verify_time = 0
         average_close_time = 0
 
-        num_bugs = len(bugs)
+        print ('Total bugs in this version: {}'.format(len(bugs)))
         counter = 1
         for bug in bugs:
-            stdout.write('\rWorking on bug {} out of {}'.format(counter,
-                                                                num_bugs))
+            stdout.write('\rWorking on bug {}'.format(counter))
             status_times = functions.get_status_times(bug.get_history_raw())
             new_time = functions.get_datetime(bug.creation_time.value)
             int_new_time = functions.get_int_datetime(new_time)

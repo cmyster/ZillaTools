@@ -1,0 +1,4 @@
+1. Maybe get a whole dumpload of everything, create a DB locally and parse
+there.
+2. Each call needs to running in its own handler, and moved to its own
+thread.
