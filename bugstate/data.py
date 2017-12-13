@@ -47,3 +47,33 @@ include_fields = [
     'resolution',
     'status',
 ]
+
+# DFGs are defined here.
+dfgs = [
+    'Ceph',
+    'CloudApp',
+    'Compute',
+    'Containers',
+    'DCI',
+    'DF',
+    'HardProv',
+    'NFV',
+    'Networking',
+    'ODL',
+    'OpenShiftonOpenStack',
+    'Operations',
+    'OpsTools',
+    'PIDONE',
+    'PerfScale',
+    'Portfolio',
+    'ProdInfra',
+    'RDOCI',
+    'ReleaseDelivery',
+    'Security',
+    'SoftwareFactory',
+    'Storage',
+    'Telemetry',
+    'UI',
+    'Upgrades',
+    'Workflows',
+]
