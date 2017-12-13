@@ -12,13 +12,14 @@ bz_q = RHBugzilla(data.URL)
 for dfg in data.dfgs:
     print ('DFG:{}'.format(dfg))
     for version in data.versions:
+        print ('Version {}:'.format(version))
         q = {'query_format': 'advanced',
              'f1': 'cf_internal_whiteboard',
-             'v1': 'DFG:{}',
+             'v1': 'DFG:{}'.format(dfg),
              'j_top': 'OR',
              'o1': 'substring',
              'product': 'Red Hat OpenStack',
-             'target_release': '{}'.format(dfg, version)}
+             'target_release': '{}'.format(version)}
 
         # No need for all possible fields, this saves time. ID must be there.
         q['include_fields'] = data.include_fields
@@ -39,7 +40,6 @@ for dfg in data.dfgs:
         average_verify_time = 0
         average_close_time = 0
 
-        print ('Version {}:'.format(version))
         num_bugs = len(bugs)
         counter = 1
         for bug in bugs:
