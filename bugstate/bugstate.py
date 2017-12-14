@@ -9,10 +9,11 @@ import data
 
 bz_q = RHBugzilla(data.URL)
 
+# This first line of output serves as columns titles.
+print ('DFG,Version,Total bugs opened,Days from NEW to ON_QA,Days from ON_QA '
+       'to VERIFIED,Days from NEW to CLOSED')
 for dfg in data.dfgs:
-    print ('DFG:{}'.format(dfg))
     for version in data.versions:
-        print ('Version {}:'.format(version))
         q = {'query_format': 'advanced',
              'f1': 'cf_internal_whiteboard',
              'v1': 'DFG:{}'.format(dfg),
@@ -40,10 +41,8 @@ for dfg in data.dfgs:
         average_verify_time = 0
         average_close_time = 0
 
-        print ('Total bugs in this version: {}'.format(len(bugs)))
         counter = 1
         for bug in bugs:
-            stdout.write('\rWorking on bug {}'.format(counter))
             status_times = functions.get_status_times(bug.get_history_raw())
             new_time = functions.get_datetime(bug.creation_time.value)
             int_new_time = functions.get_int_datetime(new_time)
@@ -54,28 +53,23 @@ for dfg in data.dfgs:
                 time_to_on_qa += (status_times['ON_QA'] - status_times['NEW'])
 
             # Bugs that skip ON_QA are not used.
-            if 'VERIFIED' in status_times.keys() and 'ON_QA' in status_times.keys():
+            if ('VERIFIED' in status_times.keys() and
+                    'ON_QA' in status_times.keys()):
                 verified_bugs += 1
-                time_to_verify += (status_times['VERIFIED'] - status_times['ON_QA'])
+                time_to_verify += (status_times['VERIFIED'] -
+                                   status_times['ON_QA'])
 
             # Bugs that were closed due to an issue with the bug are not used.
-            if 'CLOSED' in status_times.keys() and bug.resolution not in data.bad_status:
+            if ('CLOSED' in status_times.keys() and
+                    bug.resolution not in data.bad_status):
                 closed_bugs += 1
                 time_to_close += (status_times['CLOSED'] - status_times['NEW'])
 
             stdout.flush()
             counter += 1
 
-        stdout.write('\n')
-        if on_qa_bugs > 0:
-            average_on_qa_msg = functions.get_average_time_msg(
-                time_to_on_qa, on_qa_bugs, 'for a bug to reach ON_QA')
-            print (average_on_qa_msg)
-        if verified_bugs > 0:
-            average_verify_msg = functions.get_average_time_msg(
-                time_to_verify, verified_bugs, 'for ON_QA bugs to be verified')
-            print (average_verify_msg)
-        if closed_bugs > 0:
-            average_close_msg = functions.get_average_time_msg(
-                time_to_close, closed_bugs, 'for a bug to be closed')
-            print (average_close_msg)
+        print ('{},{},{},{},{},{}'.format(
+            dfg, version, len(bugs),
+            time_to_on_qa / on_qa_bugs / 86400,
+            time_to_verify / verified_bugs / 86400,
+            time_to_close / closed_bugs / 86400))

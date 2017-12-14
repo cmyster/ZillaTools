@@ -14,18 +14,6 @@ def get_int_datetime(dt):
     return int(dt.strftime('%s'))
 
 
-# Returns average time message.
-def get_average_time_msg(change_time, closed_bugs, msg):
-    average = datetime.fromtimestamp(change_time / closed_bugs)
-    # years = (eval(average.strftime('%Y')) - 1970)
-    months = average.strftime('%m')
-    days = average.strftime('%d')
-    message = (
-        'On average it took {} months and {} days {}.').format(
-        months, days, msg)
-    return message
-
-
 # Returns a dict of time and status per bug.
 def get_status_times(raw_history):
     status_time = {}
@@ -37,13 +25,3 @@ def get_status_times(raw_history):
                         event_time = get_datetime(event['when'].value)
                         status_time[status] = int(event_time.strftime('%s'))
     return status_time
-
-
-# Return the delta for a bug to reach from new to on_qa.
-def get_state_time_delta(hist_times, from_state, to_state):
-    t = 0
-    for time, state in hist_times.items():
-        if state == from_state:
-            t = time
-        if state == to_state:
-            return time - t
