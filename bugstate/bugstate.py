@@ -104,7 +104,7 @@ for dfg in data.dfgs:
                                    status_times['ON_QA'])
 
             # Bugs that were closed due to an issue with the bug are not used.
-            if ('CLOSED' in status_times.keys():
+            if ('CLOSED' in status_times.keys()):
                 closed_bugs += 1
                 time_to_close += (status_times['CLOSED'] - status_times['NEW'])
 
