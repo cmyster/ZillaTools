@@ -11,7 +11,7 @@ bz_q = RHBugzilla(data.URL)
 
 # This first line of output serves as columns titles.
 print ('DFG,Version,Total bugs opened,Days from NEW to ON_QA,Days from ON_QA '
-       'to VERIFIED,Days from NEW to CLOSED')
+       'to VERIFIED,Days from NEW to CLOSED,URL')
 for dfg in data.dfgs:
     for version in data.versions:
         q = {'query_format': 'advanced',
@@ -35,6 +35,9 @@ for dfg in data.dfgs:
         # This is where BZ is being queried.
         bugs = bz_q.query(q)
 
+        # Base URL to report with quick search.
+        link = 'https://bugzilla.redhat.com/buglist.cgi?quicksearch='
+
         # Some integers to help calculate times.
         on_qa_bugs = 0
         verified_bugs = 0
@@ -50,6 +53,7 @@ for dfg in data.dfgs:
 
         counter = 1
         for bug in bugs:
+            link += '{}%2C'.format(bug.id)
             status_times = functions.get_status_times(bug.get_history_raw())
             new_time = functions.get_datetime(bug.creation_time.value)
             int_new_time = functions.get_int_datetime(new_time)
@@ -91,5 +95,14 @@ for dfg in data.dfgs:
             else:
                 final_close = time_to_close / closed_bugs / 86400
 
-        print ('{},{},{},{},{},{}'.format(
-            dfg, version[0], len(bugs), final_onqa, final_verify, final_close))
+        # Removing last ',' from the link.
+        link = link[:-3]
+
+        # If there are no bugs, keep the link empty.
+        if on_qa_bugs == 0 and verified_bugs == 0 and closed_bugs == 0:
+            link = ''
+
+        print ('{},{},{},{},{},{},{}'.format(
+            dfg, version[0], len(bugs), final_onqa, final_verify, final_close,
+            link)
+        )
