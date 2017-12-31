@@ -22,7 +22,7 @@ for dfg in data.dfgs:
         # If no bugs were found, no need to calculate, just break iteration.
         if len(bugs) == 0:
             print ('{},{},0,,,,'.format(dfg, version[0], len(bugs)))
-            break
+            continue
 
         # Base URL to report with quick search.
         link = 'https://bugzilla.redhat.com/buglist.cgi?quicksearch='
