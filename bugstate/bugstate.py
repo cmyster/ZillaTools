@@ -75,8 +75,21 @@ for dfg in data.dfgs:
             stdout.flush()
             counter += 1
 
+            # If any of the values are 0, print nothing.
+            if time_to_on_qa == 0 or on_qa_bugs == 0:
+                final_onqa = ''
+            else:
+                final_onqa = time_to_on_qa / on_qa_bugs / 86400
+
+            if time_to_verify == 0 or verified_bugs == 0:
+                final_verify = ''
+            else:
+                final_verify = time_to_verify / verified_bugs / 86400
+
+            if time_to_close == 0 or closed_bugs == 0:
+                final_close = ''
+            else:
+                final_close = time_to_close / closed_bugs / 86400
+
         print ('{},{},{},{},{},{}'.format(
-            dfg, version[0], len(bugs),
-            time_to_on_qa / on_qa_bugs / 86400,
-            time_to_verify / verified_bugs / 86400,
-            time_to_close / closed_bugs / 86400))
+            dfg, version[0], len(bugs), final_onqa, final_verify, final_close))
