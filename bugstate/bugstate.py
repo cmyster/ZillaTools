@@ -24,7 +24,7 @@ for dfg in data.dfgs:
              'v2': 'FutureFeature',
              'o1': 'equals',
              'o2': 'equals',
-             'target_release': '{}'.format(version)}
+             'target_release': '{}'.format(version[0])}
 
         # No need for all possible fields, this saves time. ID must be there.
         q['include_fields'] = data.include_fields
@@ -73,7 +73,7 @@ for dfg in data.dfgs:
             counter += 1
 
         print ('{},{},{},{},{},{}'.format(
-            dfg, version, len(bugs),
+            dfg, version[0], len(bugs),
             time_to_on_qa / on_qa_bugs / 86400,
             time_to_verify / verified_bugs / 86400,
             time_to_close / closed_bugs / 86400))

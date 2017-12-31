@@ -28,11 +28,11 @@ bug_status = [
 ]
 
 
-# RHOSP versions as coded into BZ.
+# RHOSP versions as coded into BZ with starting and ending dates.
 versions = [
-    '10.0 (Newton)',
-    '11.0 (Ocata)',
-    '12.0 (Pike)'
+    ['10.0 (Newton)', '2016-07-28', '2016-12-15'],
+    ['11.0 (Ocata)', '2016-11-30', '2017-05-08'],
+    ['12.0 (Pike)', '2017-05-09', '2017-12-08']
 ]
 
 # Main BZ URL
