@@ -14,51 +14,7 @@ print ('DFG,Version,Total bugs opened,Days from NEW to ON_QA,Days from ON_QA '
        'to VERIFIED,Days from NEW to CLOSED,URL')
 for dfg in data.dfgs:
     for version in data.versions:
-        q = {'chfield': '[Bug creation]',
-             'chfieldfrom': '{}'.format(version[1]),
-             'chfieldto': '{}'.format(version[2]),
-             'classification': 'Red Hat',
-             'f1': 'cf_internal_whiteboard',
-             'f2': 'keywords',
-             'f3': 'resolution',
-             'f4': 'resolution',
-             'f5': 'resolution',
-             'f6': 'resolution',
-             'f7': 'resolution',
-             'f8': 'resolution',
-             'f9': 'resolution',
-             'n2': '1',
-             'n3': '1',
-             'n4': '1',
-             'n5': '1',
-             'n6': '1',
-             'n7': '1',
-             'n8': '1',
-             'n9': '1',
-             'o1': 'equals',
-             'o2': 'equals',
-             'o3': 'equals',
-             'o4': 'equals',
-             'o5': 'equals',
-             'o6': 'equals',
-             'o7': 'equals',
-             'o8': 'equals',
-             'o9': 'equals',
-             'product': 'Red Hat OpenStack',
-             'query_format': 'advanced',
-             'target_release': '{}'.format(version[0]),
-             'v1': 'DFG:{}'.format(dfg),
-             'v2': 'FutureFeature',
-             'v3': 'NOTABUG',
-             'v4': 'WONTFIX',
-             'v5': 'DEFERRED',
-             'v6': 'WORKSFORME',
-             'v7': 'DUPLICATE',
-             'v8': 'CANTFIX',
-             'v9': 'INSUFFICIENT_DATA'}
-
-        # No need for all possible fields, this saves time. ID must be there.
-        q['include_fields'] = data.include_fields
+        q = functions.get_query(version, dfg)
 
         # This is where BZ is being queried.
         bugs = bz_q.query(q)
