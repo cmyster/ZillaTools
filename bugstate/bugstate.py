@@ -15,6 +15,9 @@ print ('DFG,Version,Total bugs opened,Days from NEW to ON_QA,Days from ON_QA '
 for dfg in data.dfgs:
     for version in data.versions:
         q = {'query_format': 'advanced',
+             'chfield': '[Bug creation]',
+             'chfieldfrom': '{}'.format(version[1]),
+             'chfieldto': '{}'.format(version[2]),
              'classification': 'Red Hat',
              'product': 'Red Hat OpenStack',
              'f1': 'cf_internal_whiteboard',
