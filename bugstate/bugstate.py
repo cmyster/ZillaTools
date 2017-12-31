@@ -15,11 +15,15 @@ print ('DFG,Version,Total bugs opened,Days from NEW to ON_QA,Days from ON_QA '
 for dfg in data.dfgs:
     for version in data.versions:
         q = {'query_format': 'advanced',
-             'f1': 'cf_internal_whiteboard',
-             'v1': 'DFG:{}'.format(dfg),
-             'j_top': 'OR',
-             'o1': 'substring',
+             'classification': 'Red Hat',
              'product': 'Red Hat OpenStack',
+             'f1': 'cf_internal_whiteboard',
+             'f2': 'keywords',
+             'n2': '1',
+             'v1': 'DFG:{}'.format(dfg),
+             'v2': 'FutureFeature',
+             'o1': 'equals',
+             'o2': 'equals',
              'target_release': '{}'.format(version)}
 
         # No need for all possible fields, this saves time. ID must be there.
