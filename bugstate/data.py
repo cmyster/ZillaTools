@@ -1,14 +1,3 @@
-# Bugs that were closed with this state should not be used.
-bad_status = [
-    'NOTABUG',
-    'WONTFIX',
-    'DEFERRED',
-    'WORKSFORME',
-    'DUPLICATE',
-    'CANTFIX',
-    'INSUFFICIENT_DATA'
-]
-
 # These are the possible statuses a bug can be in.
 bug_status = [
     'NEW',       # The bug has not been triaged yet.
