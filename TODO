@@ -1,2 +1,4 @@
-1. Each call needs to running in its own handler, and moved to its own
-   tread.
+1. More docs.
+2. Better formatting?
+3. Move to class based.
+4. Delegate calls to handlers. Individual bug query takes too long.
