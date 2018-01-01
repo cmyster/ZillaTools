@@ -9,12 +9,12 @@ that you have a user with sufficient permissions for it to work.
 ## Usage
 This script was written with python 2.7 in mind, so make sure that you have
 that and the latest version of python-bugzilla:
-```bash
+```
  # _your favorite pkg manager_ update/upgrade
  # pip install python-bugzilla
 ```
 Once installed, run this command once to create a working token:
-```bash
+```
  > bugzilla --login
 Logging into bugzilla.redhat.com
 Bugzilla Username: nosuchuser@redhat.com
@@ -24,7 +24,7 @@ You might see this error: Unexpected action 'None' if a token file was
 created in  ~/.cache/python-bugzilla/ then you should be fine.
 
 Now you can 'git clone' this to anywhere and run the script via python:
-```bash
+```
  > python path-to-clone/bugstate.py
 ```
 ### TODO
