@@ -10,8 +10,7 @@ import data
 bz_q = RHBugzilla(data.URL)
 
 # This first line of output serves as columns titles.
-print ('DFG,Version,Total bugs opened,Days from NEW to ON_QA,Days from ON_QA '
-       'to VERIFIED,Days from NEW to CLOSED,URL')
+print ('DFG,Version,Total bugs,Filtered bugs,AVG days to ON_QA,AVG days from ON_QA to VERIFIED,AVG days to CLOSED,URL')
 for dfg in data.dfgs:
     for version in data.versions:
         q = functions.get_query(version, dfg)
@@ -21,7 +20,7 @@ for dfg in data.dfgs:
 
         # If no bugs were found, no need to calculate, just break iteration.
         if len(bugs) == 0:
-            print ('{},{},0,,,,'.format(dfg, version[0], len(bugs)))
+            print ('{},{},,,,,,'.format(dfg, version[0], len(bugs)))
             continue
 
         # Base URL to report with quick search.
@@ -40,32 +39,30 @@ for dfg in data.dfgs:
         average_verify_time = 0
         average_close_time = 0
 
-        counter = 1
+        ok_bugs = 1
         for bug in bugs:
-            link += '{}%2C'.format(bug.id)
-            status_times = functions.get_status_times(bug.get_history_raw())
-            new_time = functions.get_datetime(bug.creation_time.value)
-            int_new_time = functions.get_int_datetime(new_time)
-            status_times['NEW'] = int_new_time
+            if bug.resolution not in data.bad_status:
+                link += '{}%2C'.format(bug.id)
+                status_times = functions.get_status_times(bug.get_history_raw())
+                new_time = functions.get_datetime(bug.creation_time.value)
+                int_new_time = functions.get_int_datetime(new_time)
+                status_times['NEW'] = int_new_time
 
-            if 'ON_QA' in status_times.keys():
-                on_qa_bugs += 1
-                time_to_on_qa += (status_times['ON_QA'] - status_times['NEW'])
+                if 'ON_QA' in status_times.keys():
+                    on_qa_bugs += 1
+                    time_to_on_qa += (status_times['ON_QA'] - status_times['NEW'])
 
-            # Bugs that skip ON_QA are not used.
-            if ('VERIFIED' in status_times.keys() and
-                    'ON_QA' in status_times.keys()):
-                verified_bugs += 1
-                time_to_verify += (status_times['VERIFIED'] -
-                                   status_times['ON_QA'])
+                # Bugs that skip ON_QA are not used.
+                if ('VERIFIED' in status_times.keys() and 'ON_QA' in status_times.keys()):
+                    verified_bugs += 1
+                    time_to_verify += (status_times['VERIFIED'] - status_times['ON_QA'])
 
-            # Bugs that were closed due to an issue with the bug are not used.
-            if ('CLOSED' in status_times.keys()):
-                closed_bugs += 1
-                time_to_close += (status_times['CLOSED'] - status_times['NEW'])
+                # Bugs that were closed due to an issue with the bug are not used.
+                if ('CLOSED' in status_times.keys()):
+                    closed_bugs += 1
+                    time_to_close += (status_times['CLOSED'] - status_times['NEW'])
 
-            stdout.flush()
-            counter += 1
+                ok_bugs += 1
 
         # Removing last ',' from the link.
         link = link[:-3]
@@ -88,6 +85,6 @@ for dfg in data.dfgs:
         else:
             final_cls = time_to_close / closed_bugs / 86400
 
-        print ('{},{},{},{},{},{},{}'.format(
-            dfg, version[0], len(bugs), final_onq, final_ver, final_cls, link)
+        print ('{},{},{},{},{},{},{},{}'.format(
+            dfg, version[0], len(bugs), ok_bugs, final_onq, final_ver, final_cls, link)
         )

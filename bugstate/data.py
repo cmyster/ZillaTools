@@ -17,6 +17,18 @@ bug_status = [
 ]
 
 
+# Bugs that were closed with this state should not be used.
+bad_status = [
+    'NOTABUG',
+    'WONTFIX',
+    'DEFERRED',
+    'WORKSFORME',
+    'DUPLICATE',
+    'CANTFIX',
+    'INSUFFICIENT_DATA'
+]
+
+
 # RHOSP versions as coded into BZ with starting and ending dates.
 versions = [
     ['10.0 (Newton)', '2016-07-28', '2016-12-15'],
@@ -57,10 +69,6 @@ dfgs = [
     'ReleaseDelivery',
     'Security',
     'Storage',
-    'DFG:Storage Squad:Cinder',
-    'DFG:Storage Squad:Glance',
-    'DFG:Storage Squad:Manila',
-    'DFG:Storage Squad:Swift',
     'Telemetry',
     'UI',
     'Upgrades',
