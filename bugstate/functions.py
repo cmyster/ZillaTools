@@ -1,36 +1,41 @@
+"""
+Basic helper functions for the main business logic.
+"""
 from datetime import datetime
 
-from data import bug_status
-from data import include_fields
+from data import BUG_STATUS
+from data import INCLUDE_FIELDS
 
 
-# Returns a datetime from the time format used by BZ.
 def get_datetime(bz_time):
-    dt = datetime.strptime(bz_time, '%Y%m%dT%H:%M:%S')
-    return dt
+    """ Returns a datetime object from the date used in bugzilla. """
+    return datetime.strptime(bz_time, '%Y%m%dT%H:%M:%S')
 
 
-# Returns an int representation of a datetime.
-def get_int_datetime(dt):
-    return int(dt.strftime('%s'))
+def get_int_datetime(date_time):
+    """ Returns the number of seconds from EPOC to a datetime object. """
+    return int(date_time.strftime('%s'))
 
 
-# Returns a dict of time and status per bug.
 def get_status_times(raw_history):
+    """
+    Parsing a bug's raw history and returning a dictionary of the bug's change
+    over time with a status,date format.
+    """
     status_time = {}
     for events in raw_history['bugs']:
         for event in events['history']:
             for change in event['changes']:
-                for status in bug_status:
+                for status in BUG_STATUS:
                     if status == change['added']:
                         event_time = get_datetime(event['when'].value)
                         status_time[status] = int(event_time.strftime('%s'))
     return status_time
 
 
-# Return a query dict BZ can use.
 def get_query(version, dfg):
-    q = {
+    """ Building a query usable by bugzilla. """
+    query = {
         'query_format': 'advanced',
         'classification': 'Red Hat',
         'product': 'Red Hat OpenStack',
@@ -46,5 +51,5 @@ def get_query(version, dfg):
         'v2': 'FutureFeature',
         'n2': '1'
     }
-    q['include_fields'] = include_fields
-    return q
+    query['include_fields'] = INCLUDE_FIELDS
+    return query
