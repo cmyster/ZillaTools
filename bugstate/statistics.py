@@ -23,9 +23,9 @@ class PrintStatistics:
         self.dfg = dfg
         self.results = results
         self.index = index
-        self.bz = RHBugzilla(data.URL)
+        self.bz_client = RHBugzilla(data.URL)
         self.query = functions.get_query(self.version, self.dfg)
-        self.bugs = self.bz.query(self.query)
+        self.bugs = self.bz_client.query(self.query)
         self.link = data.QUICKSEARCH
 
         # Some integers to help calculate times.
@@ -104,5 +104,5 @@ class PrintStatistics:
 
         self.results[self.index] = \
             '{},{},{},{},{},{},{},{}\n'.format(
-            self.dfg, self.version[0], len(self.bugs), self.ok_bugs,
-            final_onq, final_ver, final_cls, self.link)
+                self.dfg, self.version[0], len(self.bugs), self.ok_bugs,
+                final_onq, final_ver, final_cls, self.link)

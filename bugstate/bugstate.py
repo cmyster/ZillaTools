@@ -10,20 +10,23 @@ from data import HEADERS
 from data import VERSIONS
 
 # This first line of output serves as columns titles.
-print HEADERS
-threads = [None] * len(DFGS) * len(VERSIONS)
-results = [None] * len(DFGS) * len(VERSIONS)
-thread_index = 0
+print(HEADERS)
+
+# These lists are globals for THREADS and RESULTS and need to have fixed size.
+LIST_LEN = len(DFGS) * len(VERSIONS)
+THREADS = [None] * LIST_LEN
+RESULTS = [None] * LIST_LEN
+THREAD_INDEX = 0
 
 for dfg in DFGS:
     for version in VERSIONS:
-        stat = statistics.PrintStatistics(version, dfg, results, thread_index)
-        threads[thread_index] = Thread(target=stat.run)
-        threads[thread_index].daemon = True
-        threads[thread_index].start()
-        thread_index += 1
+        STATS = statistics.PrintStatistics(version, dfg, RESULTS, THREAD_INDEX)
+        THREADS[THREAD_INDEX] = Thread(target=STATS.run)
+        THREADS[THREAD_INDEX].daemon = True
+        THREADS[THREAD_INDEX].start()
+        THREAD_INDEX += 1
 
-for index in range(len(threads)):
-    threads[index].join()
+for index in enumerate(THREADS):
+    THREADS[index].join()
 
-print "".join(results)
+print("".join(RESULTS))

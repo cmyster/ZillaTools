@@ -1,4 +1,3 @@
-1. More docs.
-2. Better formatting?
-3. Move to class based.
-4. Delegate calls to handlers. Individual bug query takes too long.
+Better structure.
+Code needs to be more general.
+Drop the globals in favor of better return from threads.
