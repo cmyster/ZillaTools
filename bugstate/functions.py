@@ -55,10 +55,14 @@ def get_query(version, dfg):
                  chfieldto='{}'.format(version[2]),
                  f1='cf_internal_whiteboard',
                  f2='keywords',
+                 f3='keywords',
                  o1='substring',
                  o2='equals',
+                 o3='equals',
                  v1='DFG:{}'.format(dfg),
                  v2='FutureFeature',
+                 v3='Documentation',
                  n2='1',
+                 n3='1',
                  include_fields=INCLUDE_FIELDS)
     return query

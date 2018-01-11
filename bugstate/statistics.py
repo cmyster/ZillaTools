@@ -1,28 +1,31 @@
 """
 Receiving DFG and version, and printing statstics.
 """
-from threading import Thread
 from bugzilla import RHBugzilla
 import data
 import functions
 
 
-class PrintStatistics(Thread):
-    def __init__(self, version, dfg):
+class PrintStatistics:
+    def __init__(self, version, dfg, results, index):
         # type: (list, str) -> None
         """
         :rtype: None
+
         :type version: list
         :type dfg: str
+        :type results: list
+        :type index: int
         """
-        super(PrintStatistics, self).__init__()
 
-        # Definitions
-        self.bzila = RHBugzilla(data.URL)
-        self.dfg = dfg
+        # Assignments and Definitions
         self.version = version
+        self.dfg = dfg
+        self.results = results
+        self.index = index
+        self.bz = RHBugzilla(data.URL)
         self.query = functions.get_query(self.version, self.dfg)
-        self.bugs = self.bzila.query(self.query)
+        self.bugs = self.bz.query(self.query)
         self.link = data.QUICKSEARCH
 
         # Some integers to help calculate times.
@@ -40,19 +43,15 @@ class PrintStatistics(Thread):
 
         self.ok_bugs = 0
 
-        # Running it all in the background.
-        thread = Thread(target=self.run, args=())
-        thread.daemon = True
-        thread.start()
-
     def run(self):
         # If no bugs, print empty and leave.
         if not self.bugs:
-            print('{},{},,,,,,'.format(self.dfg, self.version[0]))
-            return
+            self.results[self.index] = \
+                '{},{},,,,,,\n'.format(self.dfg, self.version[0])
 
         for bug in self.bugs:
             if bug.resolution not in data.BAD_STATUS:
+                self.ok_bugs += 1
                 self.link += '{}%2C'.format(bug.id)
                 status_times = functions.get_status_times(
                     bug.get_history_raw())
@@ -79,8 +78,6 @@ class PrintStatistics(Thread):
                     self.time_to_close += (status_times['CLOSED'] -
                                            status_times['NEW'])
 
-                self.ok_bugs += 1
-
         # Removing last ',' from the link.
         self.link = self.link[:-3]
 
@@ -105,6 +102,7 @@ class PrintStatistics(Thread):
         else:
             final_cls = self.time_to_close / self.closed_bugs / 86400
 
-        print('{},{},{},{},{},{},{},{}'.format(
+        self.results[self.index] = \
+            '{},{},{},{},{},{},{},{}\n'.format(
             self.dfg, self.version[0], len(self.bugs), self.ok_bugs,
-            final_onq, final_ver, final_cls, self.link))
+            final_onq, final_ver, final_cls, self.link)

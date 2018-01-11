@@ -81,3 +81,6 @@ DFGS = [
 
 # Quicksearch link starts like this, then IDs are added with a comma.
 QUICKSEARCH = 'https://bugzilla.redhat.com/buglist.cgi?quicksearch='
+
+# CSV headers
+HEADERS = 'DFG,Version,Total,Filtered,To ON_QA,To VERIFIED,To CLOSE,URL'
