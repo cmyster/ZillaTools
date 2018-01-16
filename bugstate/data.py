@@ -1,5 +1,5 @@
 """
-Here data is kept, its hard coded and not computated.
+Here data is kept, its hard coded and not calculated.
 """
 # These are the possible statuses a bug can be in.
 BUG_STATUS = [
@@ -42,8 +42,7 @@ VERSIONS = [
 # Main BZ URL
 URL = 'bugzilla.redhat.com'
 
-# These are the only needed fields.
-# Less fields is less taxing on BZ. ID must remain.
+# These are the only needed fields. Less fields is less taxing on BZ.
 INCLUDE_FIELDS = [
     'id',
     'creation_time',

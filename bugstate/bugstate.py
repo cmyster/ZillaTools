@@ -4,7 +4,6 @@ a CSV with data to be later digested elsewhere.
 """
 from threading import Thread
 import statistics
-
 from data import DFGS
 from data import HEADERS
 from data import VERSIONS

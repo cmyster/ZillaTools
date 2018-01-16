@@ -2,30 +2,37 @@
 Basic helper functions for the main business logic.
 """
 from datetime import datetime
-
 from data import BUG_STATUS
 from data import INCLUDE_FIELDS
 
 
 def get_datetime(bz_time):
     # type: (str) -> datetime
-    """ Returns a datetime object from the date used in bugzilla. """
+    """
+    Returns a datetime object from the date used in bugzilla.
+    :type bz_time: str
+    :rtype: datetime
+    """
     return datetime.strptime(bz_time, '%Y%m%dT%H:%M:%S')
 
 
 def get_int_datetime(date_time):
     # type: (datetime) -> int
-    """ Returns the number of seconds from EPOC to a datetime object. """
+    """
+    Returns the number of seconds from EPOCH to a datetime object.
+    :type date_time: datetime
+    :rtype: int
+    """
     return int(date_time.strftime('%s'))
 
 
 def get_status_times(raw_history):
-    # type: (dict) -> int
+    # type: (dict) -> dict
     """
     Parsing a bug's raw history and returning a dictionary of the bug's change
     over time with a status,date format.
     :type raw_history: dict
-    :rtype: int
+    :rtype: dict
     """
     status_time = {}
     for events in raw_history['bugs']:
