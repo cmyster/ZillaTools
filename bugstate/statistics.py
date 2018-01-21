@@ -6,7 +6,7 @@ import data
 import functions
 
 
-class PrintStatistics: # pylint: disable=too-few-public-methods
+class PrintStatistics:
     """
     Generates a single CSV line. It is returned as string item inside a list in
     the position that corresponds to the calling thread number to be merged in
@@ -31,9 +31,9 @@ class PrintStatistics: # pylint: disable=too-few-public-methods
         self.index = index
 
     def run(self):
-        # type: (None) -> str
+        # type: (self) -> None
         """
-        :rtype: str
+        :rtype: None
         """
         # Creating the bz client and bugs queries.
         bz_client = RHBugzilla(data.URL)

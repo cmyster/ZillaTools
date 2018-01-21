@@ -25,7 +25,7 @@ for dfg in DFGS:
         THREADS[THREAD_INDEX].start()
         THREAD_INDEX += 1
 
-for index in enumerate(THREADS):
+for index in range(len(THREADS)):
     THREADS[index].join()
 
 print("".join(RESULTS))
