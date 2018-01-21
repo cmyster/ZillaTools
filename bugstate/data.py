@@ -1,6 +1,27 @@
 """
 Here data is kept, its hard coded and not calculated.
 """
+
+# Default help.
+BS_HELP = "bugstate generates a CSV containing data from BugZilla with\
+the following data:\n\
+    DFG name: Internal group name.\n\
+    Version: OpenStack version.\n\
+    Total opened bugs: According to a specific search criteria.\n\
+    Good bugs: From those opened, those bugs that DEV/QA spent time on.\n\
+    Average time to reach ON_QA: Average time it took \"good\" bugs to change\
+from NEW to ON_QA status.\n\
+    Average time to reach VERIFIED: Average time it took \"good\" bugs to\
+change from ON_QA to VERIFIED status.\n\
+    Average time to close: Average time it took \"good\" bugs to change from\
+NEW to CLOSED.\n\
+\n\
+Usage: bugstate [ --help - print this. ; --file <logname> ]\n\
+"
+
+# Default bugstate file name.
+BS_OUTFILE = 'bugstate.csv'
+
 # These are the possible statuses a bug can be in.
 BUG_STATUS = [
     'NEW',        # The bug has not been triaged yet.
