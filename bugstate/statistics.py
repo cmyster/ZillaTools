@@ -52,7 +52,7 @@ class PrintStatistics:
         # If no bugs, print empty and leave.
         if not bugs:
             self.results[self.index] = \
-                '{},{},,,,,,\n'.format(self.dfg, self.version[0])
+                '{},{},0,0,0,0,0,\n'.format(self.dfg, self.version[0])
             return
 
         for bug in bugs:
@@ -93,15 +93,15 @@ class PrintStatistics:
         # In case of 0 bugs, print nothing. Else, divide time by number and
         # by 86400 which is the number of seconds in one day.
         if on_qa_bugs == 0:
-            final_onq = ''
+            final_onq = '0'
         else:
             final_onq = time_to_on_qa / on_qa_bugs / 86400
         if verified_bugs == 0:
-            final_ver = ''
+            final_ver = '0'
         else:
             final_ver = time_to_verify / verified_bugs / 86400
         if closed_bugs == 0:
-            final_cls = ''
+            final_cls = '0'
         else:
             final_cls = time_to_close / closed_bugs / 86400
 
