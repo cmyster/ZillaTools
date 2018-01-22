@@ -22,11 +22,11 @@ Usage: bugstate.py [ --help - print this. ; --file <logname> ]\n\
 # Default userstate help.
 US_HELP = "Userstate generates a CSV containing data from BugZilla with\
 the following data:\n\
-    'UserID: Login username ' \
-    'ON_QA: Number of on ON_QA bugs on the user and a link.'\
-    'Open bugs: Number of all open bugs on the user and a link.'\
-    'Reported bugs: Number of all the bugs reported by the user and a link.'\
-    'Needed info: Number of bugs with needinfo on the user and a link.'\
+    'UserID: Login name'\n\
+    'ON_QA: Number of on ON_QA bugs on the user and a link.'\n\
+    'Open bugs: Number of all open bugs on the user and a link.'\n\
+    'Reported bugs: Number of all the bugs reported by the user and a link.'\n\
+    'Needed info: Number of bugs with needinfo on the user and a link.'\n\
 \n\
 Usage: userstate.py [ --help - print this. ; --file <logname> ]\n\
 "
