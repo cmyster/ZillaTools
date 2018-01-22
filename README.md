@@ -33,7 +33,8 @@ that can be used, for instance to calculate changes between versions for
 a specific group.
 
 ### Usage
-Run the script directly from cli, add --help or --file '<filename>' 
+Run the script directly from cli. If needed, add --help or --file
+'\<filename\>' 
 ```
 /<SomePath>/ZillaTools/zillatools/bugstate.py
 ```
