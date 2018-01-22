@@ -28,13 +28,15 @@ Now you can 'git clone' this to anywhere and run the scripts inside.
 
 ## BugState
 This scrips will go over _meaningful_ bugs that were opened in each
-major RHOSP version starting in Newton. The output of it is a simple csv
+major RHOSP version starting in Newton. The output of it is a simple CSV
 that can be used, for instance to calculate changes between versions for
 a specific group.
 
 ### Usage
-Run the script directly from cli. If needed, add --help or --file
-'\<filename\>' 
+Run the script directly from cli to produce a CSV file that contains all the
+data. You can add --help for help and --file '\<filename\>' to change the 
+file's path and name.
+
 ```
 /<SomePath>/ZillaTools/zillatools/bugstate.py
 ```
