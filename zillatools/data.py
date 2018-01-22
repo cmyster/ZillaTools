@@ -2,8 +2,8 @@
 Here data is kept, its hard coded and not calculated.
 """
 
-# Default help.
-BS_HELP = "bugstate generates a CSV containing data from BugZilla with\
+# Default bugstate help.
+BS_HELP = "Bugstate generates a CSV containing data from BugZilla with\
 the following data:\n\
     DFG name: Internal group name.\n\
     Version: OpenStack version.\n\
@@ -16,11 +16,20 @@ change from ON_QA to VERIFIED status.\n\
     Average time to close: Average time it took \"good\" bugs to change from\
 NEW to CLOSED.\n\
 \n\
-Usage: bugstate [ --help - print this. ; --file <logname> ]\n\
+Usage: bugstate.py [ --help - print this. ; --file <logname> ]\n\
 "
 
-# Default bugstate file name.
-BS_OUTFILE = 'bugstate.csv'
+# Default userstate help.
+US_HELP = "Userstate generates a CSV containing data from BugZilla with\
+the following data:\n\
+    'UserID: Login username ' \
+    'ON_QA: Number of on ON_QA bugs on the user and a link.'\
+    'Open bugs: Number of all open bugs on the user and a link.'\
+    'Reported bugs: Number of all the bugs reported by the user and a link.'\
+    'Needed info: Number of bugs with needinfo on the user and a link.'\
+\n\
+Usage: userstate.py [ --help - print this. ; --file <logname> ]\n\
+"
 
 # These are the possible statuses a bug can be in.
 BUG_STATUS = [
@@ -99,8 +108,29 @@ DFGS = [
     'Workflows',
 ]
 
-# Quicksearch link starts like this, then IDs are added with a comma.
-QUICKSEARCH = 'https://bugzilla.redhat.com/buglist.cgi?quicksearch='
+# Usernames to be tracked. No leading @domain.xyz is needed.
+USERS = [
+    'augol',
+    'mcornea',
+    'rbartal',
+    'rrasouli',
+    'ssmolyak',
+    'yprokule'
+]
 
-# CSV headers
-HEADERS = 'DFG,Version,Total,Filtered,To ON_QA,To VERIFIED,To CLOSE,URL'
+# Quicksearch link starts like this, then IDs are added with a comma.
+BS_QUICKSEARCH = 'https://bugzilla.redhat.com/buglist.cgi?quicksearch='
+
+# Bugstate CSV headers
+BS_HEADERS = 'DFG,Version,Total,Filtered,To ON_QA,To VERIFIED,To CLOSE,URL'
+
+# Userstate CSV headers
+US_HEADERS = 'UserID,' \
+             'ON_QA,link,' \
+             'Need info,link,' \
+             'Open bugs,link,' \
+             'Reported bugs,link,' \
+             'Needed info,link'
+
+# Red Hat Dot Com
+RHDT = '@redhat.com'

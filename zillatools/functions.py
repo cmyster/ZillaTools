@@ -2,9 +2,9 @@
 Basic helper functions for the main business logic.
 """
 from datetime import datetime
-from data import BS_OUTFILE
 from data import BUG_STATUS
 from data import INCLUDE_FIELDS
+from data import RHDT
 
 
 def get_datetime(bz_time):
@@ -46,7 +46,7 @@ def get_status_times(raw_history):
     return status_time
 
 
-def get_query(version, dfg):
+def get_bs_query(version, dfg):
     # type: (list, str) -> dict
     """
     Building a query usable by bugzilla.
@@ -76,7 +76,66 @@ def get_query(version, dfg):
     return query
 
 
-def get_totals(logfile, version, dfgs):
+def get_on_qa_query(username):
+    # type: (str) -> dict
+    """
+    Returns a query of all bugs that are ON_QA for a qa_contact.
+    :param username: str
+    :rtype: dict
+    """
+    query = dict(bug_status='ON_QA',
+                 qa_contact='{}{}'.format(username, RHDT))
+
+    return query
+
+
+def get_open_query(username):
+    # type: (str) -> dict
+    """
+    Returns a query of all bugs that are still open for a qa_contact.
+    :param username: str
+    :rtype: dict
+    """
+    query = {'bug_status': 'NEW',
+             'bug_status': 'ASSIGNED',
+             'bug_status': 'POST',
+             'bug_status': 'MODIFIED',
+             'bug_status': 'ON_DEV',
+             'f1': 'qa_contact',
+             'o1': 'equals',
+             'v1': '{}{}'.format(username, RHDT)}
+    return query
+
+
+def get_reported_query(username):
+    # type: (str) -> dict
+    """
+    Returns a query of all bugs that were reported by a qa_contact.
+    :param username: str
+    :rtype: dict
+    """
+    query = dict(f1='reporter',
+                 o1='equals',
+                 v1='{}{}'.format(username, RHDT))
+
+    return query
+
+
+def get_needinfo_query(username):
+    # type: (str) -> dict
+    """
+    Returns a query of all bugs that have a need info flag on a qa_contact.
+    :param username: str
+    :rtype: dict
+    """
+    query = dict(f1='requestees.login_name',
+                 o1='equals',
+                 v1='{}{}'.format(username, RHDT))
+
+    return query
+
+
+def get_bs_totals(logfile, version, dfgs):
     # type: (str, str, int) -> str
     """
     Reading lines of relevant versions from log and returning their average.
@@ -114,28 +173,39 @@ def get_totals(logfile, version, dfgs):
                                    close / dfgs)
 
 
-def get_logfile(argv):
-    # type: (list) -> str
+def get_log_name(argv, name):
+    # type: (list, str) -> str
     """
     Defining a logfile and making sure its writable.
     :type argv: list
+    :type name: str
     :rtype: str
     """
-    log_file = '{}'.format(BS_OUTFILE)
+    # Getting a default name first.
+    log_file = name
+
     if '--file' in argv:
         try:
             if argv[argv.index('--file') + 1] is not str:
                 log_file = argv[argv.index('--file') + 1]
+                # Making sure that file is writeable
+                try:
+                    log = open("{}".format(log_file), "w")
+                    log.close()
+                except IOError as e:
+                    print 'IOError: {0} - {1}'.format(e.errno, e.strerror)
+                    exit(1)
         except IndexError as e:
             print 'Missing argument\n{}'.format(e)
             exit(1)
 
-    # Making sure that file is writeable
-    try:
-        log = open("{}".format(log_file), "w")
-        log.close()
-    except IOError as e:
-        print 'IOError: {0} - {1}'.format(e.errno, e.strerror)
-        exit(1)
+    # If there are more arguments, print ignore message.
+    if len(argv) > 3:
+        print 'Ignoring arguments: ',
+        for i in range(3, len(argv)):
+            print "{} ".format(argv[i]),
+        print ''
+
+    print 'Data is saved to {}'.format(log_file)
 
     return log_file

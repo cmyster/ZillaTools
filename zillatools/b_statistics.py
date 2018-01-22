@@ -6,7 +6,7 @@ import data
 import functions
 
 
-class PrintStatistics:
+class BugStatistics:
     """
     Generates a single CSV line. It is returned as string item inside a list in
     the position that corresponds to the calling thread number to be merged in
@@ -15,7 +15,7 @@ class PrintStatistics:
     :rtype: list
     """
     def __init__(self, version, dfg, results, index):
-        # type: (list, str) -> None
+        # type: (list, str, list, int) -> None
         """
         :type version: list
         :type dfg: str
@@ -37,9 +37,9 @@ class PrintStatistics:
         """
         # Creating the bz client and bugs queries.
         bz_client = RHBugzilla(data.URL)
-        query = functions.get_query(self.version, self.dfg)
+        query = functions.get_bs_query(self.version, self.dfg)
         bugs = bz_client.query(query)
-        link = data.QUICKSEARCH
+        link = data.BS_QUICKSEARCH
         # Some integers to help calculate times.
         on_qa_bugs = 0
         verified_bugs = 0
