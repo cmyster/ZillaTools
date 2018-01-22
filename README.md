@@ -27,18 +27,22 @@ created in  ~/.cache/python-bugzilla/ then you should be fine.
 Now you can 'git clone' this to anywhere and run the scripts inside.
 
 ## BugState
-This scrips will go over _meaningful_ bugs that were opened in each
+Goes over _meaningful_ bugs that were opened in each
 major RHOSP version starting in Newton. The output of it is a simple CSV
 that can be used, for instance to calculate changes between versions for
 a specific group.
 
+## UserState
+Goes over a list of predefined users and fetches specific data on each and
+saves that as a CSV.
+
 ### Usage
-Run the script directly from cli to produce a CSV file that contains all the
-data. You can add --help for help and --file '\<filename\>' to change the 
-file's path and name.
+Run the script directly from CLI to produce a CSV file that contains all the
+data. You can add --help for help or --file '\<filename\>' to change the 
+file's name and path.
 
 ```
-/<SomePath>/ZillaTools/zillatools/bugstate.py
+/<SomePath>/ZillaTools/zillatools/scriptname.py
 ```
 
 ## TODO
