@@ -2,6 +2,7 @@
 Generates a single line of bug statistics for a combination of DFG and version.
 """
 from bugzilla import RHBugzilla
+from datetime import datetime
 import data
 import functions
 
@@ -61,8 +62,9 @@ class BugStatistics:
                 link += '{}%2C'.format(bug.id)
                 status_times = functions.get_status_times(
                     bug.get_history_raw())
-                new_time = functions.get_datetime(bug.creation_time.value)
-                int_new_time = functions.get_int_datetime(new_time)
+                new_time = datetime.strptime(bug.creation_time.value,
+                                             '%Y%m%dT%H:%M:%S')
+                int_new_time = int(new_time.strftime('%s'))
                 status_times['NEW'] = int_new_time
 
                 if 'ON_QA' in status_times.keys():

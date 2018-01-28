@@ -7,26 +7,6 @@ from data import INCLUDE_FIELDS
 from data import RHDT
 
 
-def get_datetime(bz_time):
-    # type: (str) -> datetime
-    """
-    Returns a datetime object from the date used in bugzilla.
-    :type bz_time: str
-    :rtype: datetime
-    """
-    return datetime.strptime(bz_time, '%Y%m%dT%H:%M:%S')
-
-
-def get_int_datetime(date_time):
-    # type: (datetime) -> int
-    """
-    Returns the number of seconds from EPOCH to a datetime object.
-    :type date_time: datetime
-    :rtype: int
-    """
-    return int(date_time.strftime('%s'))
-
-
 def get_status_times(raw_history):
     # type: (dict) -> dict
     """
@@ -41,8 +21,10 @@ def get_status_times(raw_history):
             for change in event['changes']:
                 for status in BUG_STATUS:
                     if status == change['added']:
-                        event_time = get_datetime(event['when'].value)
-                        status_time[status] = int(event_time.strftime('%s'))
+                        status_time[status] = int(
+                            (datetime.strptime(
+                                event['when'].value,
+                                '%Y%m%dT%H:%M:%S')).strftime('%s'))
     return status_time
 
 
