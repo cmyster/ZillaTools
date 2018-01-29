@@ -54,22 +54,22 @@ class UserStatistics:
         l_needinfo = ''
 
         if len(b_on_qa) != 0:
-            l_on_qa = data.BS_QUICKSEARCH
+            l_on_qa = data.QUICKSEARCH
             for bug in b_on_qa:
                 l_on_qa += '{}%2C'.format(bug.id)
 
         if len(b_open) != 0:
-            l_open = data.BS_QUICKSEARCH
+            l_open = data.QUICKSEARCH
             for bug in b_open:
                 l_open += '{}%2C'.format(bug.id)
 
         if len(b_reported) != 0:
-            l_reported = data.BS_QUICKSEARCH
+            l_reported = data.QUICKSEARCH
             for bug in b_reported:
                 l_reported += '{}%2C'.format(bug.id)
 
         if len(b_needinfo) != 0:
-            l_needinfo = data.BS_QUICKSEARCH
+            l_needinfo = data.QUICKSEARCH
             for bug in b_needinfo:
                 l_needinfo += '{}%2C'.format(bug.id)
 

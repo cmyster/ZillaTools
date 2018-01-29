@@ -31,7 +31,7 @@ class BugStatistics:
         self.results = results
         self.index = index
 
-    def run(self):
+    def main(self):
         # type: (self) -> None
         """
         :rtype: None
@@ -40,7 +40,7 @@ class BugStatistics:
         bz_client = RHBugzilla(data.URL)
         query = functions.get_bs_query(self.version, self.dfg)
         bugs = bz_client.query(query)
-        link = data.BS_QUICKSEARCH
+        link = data.QUICKSEARCH
         # Some integers to help calculate times.
         on_qa_bugs = 0
         verified_bugs = 0

@@ -7,6 +7,7 @@ from threading import Thread
 from sys import argv
 from sys import exit
 import b_statistics
+import update_sheet
 from functions import get_bs_totals
 from functions import get_log_name
 import data
@@ -32,7 +33,7 @@ THREAD_INDEX = 0
 for dfg in data.DFGS:
     for version in data.VERSIONS:
         STATS = b_statistics.BugStatistics(version, dfg, RESULTS, THREAD_INDEX)
-        THREADS[THREAD_INDEX] = Thread(target=STATS.run)
+        THREADS[THREAD_INDEX] = Thread(target=STATS.main)
         THREADS[THREAD_INDEX].daemon = True
         print('Starting thread for {} in {}'.format(dfg, version[0]))
         THREADS[THREAD_INDEX].start()
@@ -52,6 +53,16 @@ for version in data.VERSIONS:
     totals = get_bs_totals(LOG_FILE, version[0], len(data.DFGS))
     log.write("Total averages, for {},{}\n".format(version[0], totals))
     log.close()
+
+update = update_sheet.UpdateSheet(
+    data.BS_SHEET,
+    data.API_SECRET,
+    data.API_TOKEN,
+    LOG_FILE,
+    data.BS_HEADERS
+)
+
+update()
 
 # Finally
 print "DONE!"

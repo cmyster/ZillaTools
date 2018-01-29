@@ -6,6 +6,7 @@ from threading import Thread
 from sys import argv
 from sys import exit
 import u_statistics
+import update_sheet
 from functions import get_log_name
 import data
 
@@ -42,6 +43,16 @@ print 'Writing to {}'.format(LOG_FILE)
 log = open("{}".format(LOG_FILE), "a")
 log.write("".join(RESULTS))
 log.close()
+
+update = update_sheet.UpdateSheet(
+    data.US_SHEET,
+    data.API_SECRET,
+    data.API_TOKEN,
+    LOG_FILE,
+    data.US_HEADERS
+)
+
+update()
 
 # Finally
 print "DONE!"

@@ -119,18 +119,29 @@ USERS = [
 ]
 
 # Quicksearch link starts like this, then IDs are added with a comma.
-BS_QUICKSEARCH = 'https://bugzilla.redhat.com/buglist.cgi?quicksearch='
+QUICKSEARCH = 'https://bugzilla.redhat.com/buglist.cgi?quicksearch='
 
 # Bugstate CSV headers
-BS_HEADERS = 'DFG,Version,Total,Filtered,To ON_QA,To VERIFIED,To CLOSE,URL'
+BS_HEADERS = 'DFG,Version,Total,Filtered,To ON_QA,To VERIFIED,To CLOSE,LINK'
 
 # Userstate CSV headers
-US_HEADERS = 'UserID,' \
-             'ON_QA,link,' \
-             'Need info,link,' \
-             'Open bugs,link,' \
-             'Reported bugs,link,' \
-             'Needed info,link'
+US_HEADERS = 'UserID,'\
+    'ON_QA,link,'\
+    'Open bugs,link,'\
+    'Reported bugs,link,'\
+    'needinfo,link,'
 
 # Red Hat Dot Com
 RHDT = '@redhat.com'
+
+# Path to API secrets file
+API_SECRET = 'client_secret.json'
+
+# Token for BugStatistics.
+API_TOKEN = 'sheets.googleapis.com-python.json'
+
+# Google sheet that holds user statistics.
+US_SHEET = '11WTyjmbgU1K98xu_8TnhjPrAjmDb2uEmUD4PJ5xkML4'
+
+# Google sheet that holds bug statistics.
+BS_SHEET = '1hJkSWyzB2dCOlajZgw2ZmVrjwX7fUFSDQm2nLF461_I'

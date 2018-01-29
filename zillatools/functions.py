@@ -148,11 +148,12 @@ def get_bs_totals(logfile, version, dfgs):
                 close += int(line.split(",")[6])
     log.close()
 
-    return '{},{},{},{},{}'.format(total / dfgs,
-                                   goods / dfgs,
-                                   on_qa / dfgs,
-                                   verify / dfgs,
-                                   close / dfgs)
+    if dfgs == 0:
+        return '0,0,0,0,0'
+    else:
+        return '{},{},{},{},{}'.format(
+            total / dfgs, goods / dfgs, on_qa / dfgs, verify / dfgs,
+            close / dfgs)
 
 
 def get_log_name(argv, name):
@@ -191,3 +192,19 @@ def get_log_name(argv, name):
     print 'Data is saved to {}'.format(log_file)
 
     return log_file
+
+def get_sums(columns, rows):
+    # type (int, int) -> str
+    """
+    Returns a summery line as bottom line of a report.
+    :type columns: int
+    :type rows: int
+    :rtype: str
+    """
+
+    sums = 'sums,'
+    for row in enumerate(rows):
+        for column in enumerate(columns):
+            sums += ''
+
+    return sums

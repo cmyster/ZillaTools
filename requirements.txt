@@ -1,1 +1,4 @@
+PyDrive
+httplib2
+google-api-python-client
 python-bugzilla
