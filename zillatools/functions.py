@@ -192,19 +192,3 @@ def get_log_name(argv, name):
     print 'Data is saved to {}'.format(log_file)
 
     return log_file
-
-def get_sums(columns, rows):
-    # type (int, int) -> str
-    """
-    Returns a summery line as bottom line of a report.
-    :type columns: int
-    :type rows: int
-    :rtype: str
-    """
-
-    sums = 'sums,'
-    for row in enumerate(rows):
-        for column in enumerate(columns):
-            sums += ''
-
-    return sums

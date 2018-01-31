@@ -49,7 +49,6 @@ update = update_sheet.UpdateSheet(
     data.API_SECRET,
     data.API_TOKEN,
     LOG_FILE,
-    data.US_HEADERS
 )
 
 update()
