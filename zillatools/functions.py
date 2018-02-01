@@ -1,5 +1,5 @@
 """
-Basic helper functions for the main business logic.
+Basic helper methodes for the main business logic.
 """
 from datetime import datetime
 from data import BUG_STATUS

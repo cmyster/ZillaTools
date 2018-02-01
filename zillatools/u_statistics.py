@@ -1,5 +1,5 @@
 """
-Generates a single line of bug statistics for a username.
+Generates a single line of bug statistics per username.
 """
 from bugzilla import RHBugzilla
 import data

@@ -16,7 +16,7 @@ change from ON_QA to VERIFIED status.\n\
     Average time to close: Average time it took \"good\" bugs to change from\
 NEW to CLOSED.\n\
 \n\
-Usage: bugstate.py [ --help - print this. ; --file <logname> ]\n\
+Usage: bugstate.py [ --help: print this. ; --file <CSV path/name> ]\n\
 "
 
 # Default userstate help.
@@ -28,7 +28,7 @@ the following data:\n\
     Reported bugs: Number of all the bugs reported by the user and a link.\n\
     Needed info: Number of bugs with needinfo on the user and a link.\n\
 \n\
-Usage: userstate.py [ --help - print this. ; --file <logname> ]\n\
+Usage: userstate.py [ --help: print this. ; --file <CSV path/name> ]\n\
 "
 
 # These are the possible statuses a bug can be in.
@@ -72,7 +72,8 @@ VERSIONS = [
 # Main BZ URL
 URL = 'bugzilla.redhat.com'
 
-# These are the only needed fields. Less fields is less taxing on BZ.
+# These are the only needed fields. Less fields is less taxing. Bug id must
+# always be used.
 INCLUDE_FIELDS = [
     'id',
     'creation_time',
@@ -118,7 +119,7 @@ USERS = [
     'yprokule'
 ]
 
-# Quicksearch link starts like this, then IDs are added with a comma.
+# Quicksearch link starts like this, then bug IDs are added with a comma.
 QUICKSEARCH = 'https://bugzilla.redhat.com/buglist.cgi?quicksearch='
 
 # Bugstate CSV headers
