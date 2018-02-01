@@ -2,7 +2,7 @@
 Generates a single line of bug statistics per username.
 """
 from bugzilla import RHBugzilla
-import data
+import c_data
 import functions
 
 
@@ -34,50 +34,50 @@ class UserStatistics:
         :rtype: None
         """
         # Creating the bz client.
-        bz_client = RHBugzilla(data.URL)
+        bz_client = RHBugzilla(c_data.URL)
         # Creating needed queries.
         q_on_qa = functions.get_on_qa_query(self.user)
         q_open = functions.get_open_query(self.user)
         q_reported = functions.get_reported_query(self.user)
-        q_needinfo = functions.get_needinfo_query(self.user)
+        q_need_info = functions.get_needinfo_query(self.user)
 
         # Getting bug lists.
         b_on_qa = bz_client.query(q_on_qa)
         b_open = bz_client.query(q_open)
         b_reported = bz_client.query(q_reported)
-        b_needinfo = bz_client.query(q_needinfo)
+        b_need_info = bz_client.query(q_need_info)
 
         # Quicksearch links
         l_on_qa = ''
         l_open = ''
         l_reported = ''
-        l_needinfo = ''
+        l_need_info = ''
 
         if len(b_on_qa) != 0:
-            l_on_qa = data.QUICKSEARCH
+            l_on_qa = c_data.QUICKSEARCH
             for bug in b_on_qa:
                 l_on_qa += '{}%2C'.format(bug.id)
 
         if len(b_open) != 0:
-            l_open = data.QUICKSEARCH
+            l_open = c_data.QUICKSEARCH
             for bug in b_open:
                 l_open += '{}%2C'.format(bug.id)
 
         if len(b_reported) != 0:
-            l_reported = data.QUICKSEARCH
+            l_reported = c_data.QUICKSEARCH
             for bug in b_reported:
                 l_reported += '{}%2C'.format(bug.id)
 
-        if len(b_needinfo) != 0:
-            l_needinfo = data.QUICKSEARCH
-            for bug in b_needinfo:
-                l_needinfo += '{}%2C'.format(bug.id)
+        if len(b_need_info) != 0:
+            l_need_info = c_data.QUICKSEARCH
+            for bug in b_need_info:
+                l_need_info += '{}%2C'.format(bug.id)
 
         # Removing last ',' from the links.
         l_on_qa = l_on_qa[:-3]
         l_open = l_open[:-3]
         l_reported = l_reported[:-3]
-        l_needinfo = l_needinfo[:-3]
+        l_need_info = l_need_info[:-3]
 
         self.results[self.index] = \
             '{},{},{},{},{},{},{},{},{}\n'.format(
@@ -85,4 +85,4 @@ class UserStatistics:
                 len(b_on_qa), l_on_qa,
                 len(b_open), l_open,
                 len(b_reported), l_reported,
-                len(b_needinfo), l_needinfo)
+                len(b_need_info), l_need_info)

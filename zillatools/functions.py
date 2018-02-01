@@ -2,9 +2,7 @@
 Basic helper methodes for the main business logic.
 """
 from datetime import datetime
-from data import BUG_STATUS
-from data import INCLUDE_FIELDS
-from data import RHDT
+import c_data
 
 
 def get_status_times(raw_history):
@@ -19,7 +17,7 @@ def get_status_times(raw_history):
     for events in raw_history['bugs']:
         for event in events['history']:
             for change in event['changes']:
-                for status in BUG_STATUS:
+                for status in c_data.BUG_STATUS:
                     if status == change['added']:
                         status_time[status] = int(
                             (datetime.strptime(
@@ -54,7 +52,7 @@ def get_bs_query(version, dfg):
                  v3='Documentation',
                  n2='1',
                  n3='1',
-                 include_fields=INCLUDE_FIELDS)
+                 include_fields=c_data.INCLUDE_FIELDS)
     return query
 
 
@@ -66,7 +64,7 @@ def get_on_qa_query(username):
     :rtype: dict
     """
     query = dict(bug_status='ON_QA',
-                 qa_contact='{}{}'.format(username, RHDT))
+                 qa_contact='{}{}'.format(username, c_data.RHDT))
 
     return query
 
@@ -85,7 +83,7 @@ def get_open_query(username):
              'bug_status': 'ON_DEV',
              'f1': 'qa_contact',
              'o1': 'equals',
-             'v1': '{}{}'.format(username, RHDT)}
+             'v1': '{}{}'.format(username, c_data.RHDT)}
     return query
 
 
@@ -98,7 +96,7 @@ def get_reported_query(username):
     """
     query = dict(f1='reporter',
                  o1='equals',
-                 v1='{}{}'.format(username, RHDT))
+                 v1='{}{}'.format(username, c_data.RHDT))
 
     return query
 
@@ -112,7 +110,7 @@ def get_needinfo_query(username):
     """
     query = dict(f1='requestees.login_name',
                  o1='equals',
-                 v1='{}{}'.format(username, RHDT))
+                 v1='{}{}'.format(username, c_data.RHDT))
 
     return query
 

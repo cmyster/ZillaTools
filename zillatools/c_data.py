@@ -1,35 +1,6 @@
 """
-Here data is kept, its hard coded and not calculated.
+Common data. Here data is kept, its hard coded and not calculated.
 """
-
-# Default bugstate help.
-BS_HELP = "Bugstate generates a CSV containing data from BugZilla with\
-the following data:\n\
-    DFG name: Internal group name.\n\
-    Version: OpenStack version.\n\
-    Total opened bugs: According to a specific search criteria.\n\
-    Good bugs: From those opened, those bugs that DEV/QA spent time on.\n\
-    Average time to reach ON_QA: Average time it took \"good\" bugs to change\
-from NEW to ON_QA status.\n\
-    Average time to reach VERIFIED: Average time it took \"good\" bugs to\
-change from ON_QA to VERIFIED status.\n\
-    Average time to close: Average time it took \"good\" bugs to change from\
-NEW to CLOSED.\n\
-\n\
-Usage: bugstate.py [ --help: print this. ; --file <CSV path/name> ]\n\
-"
-
-# Default userstate help.
-US_HELP = "Userstate generates a CSV containing data from BugZilla with\
-the following data:\n\
-    UserID: Login name.\n\
-    ON_QA: Number of on ON_QA bugs on the user and a link.\n\
-    Open bugs: Number of all open bugs on the user and a link.\n\
-    Reported bugs: Number of all the bugs reported by the user and a link.\n\
-    Needed info: Number of bugs with needinfo on the user and a link.\n\
-\n\
-Usage: userstate.py [ --help: print this. ; --file <CSV path/name> ]\n\
-"
 
 # These are the possible statuses a bug can be in.
 BUG_STATUS = [
@@ -109,28 +80,8 @@ DFGS = [
     'Workflows',
 ]
 
-# Usernames to be tracked. No leading @domain.xyz is needed.
-USERS = [
-    'augol',
-    'mcornea',
-    'rbartal',
-    'rrasouli',
-    'ssmolyak',
-    'yprokule'
-]
-
 # Quicksearch link starts like this, then bug IDs are added with a comma.
 QUICKSEARCH = 'https://bugzilla.redhat.com/buglist.cgi?quicksearch='
-
-# Bugstate CSV headers
-BS_HEADERS = 'DFG,Version,Total,Filtered,To ON_QA,To VERIFIED,To CLOSE,LINK'
-
-# Userstate CSV headers
-US_HEADERS = 'UserID,'\
-    'ON_QA,link,'\
-    'Open bugs,link,'\
-    'Reported bugs,link,'\
-    'needinfo,link,'
 
 # Red Hat Dot Com
 RHDT = '@redhat.com'
@@ -140,9 +91,3 @@ API_SECRET = 'client_secret.json'
 
 # Token for BugStatistics.
 API_TOKEN = 'sheets.googleapis.com-python.json'
-
-# Google sheet that holds user statistics.
-US_SHEET = '11WTyjmbgU1K98xu_8TnhjPrAjmDb2uEmUD4PJ5xkML4'
-
-# Google sheet that holds bug statistics.
-BS_SHEET = '1hJkSWyzB2dCOlajZgw2ZmVrjwX7fUFSDQm2nLF461_I'

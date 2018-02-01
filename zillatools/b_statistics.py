@@ -3,7 +3,9 @@ Generates a single line of bug statistics for a combination of DFG and version.
 """
 from bugzilla import RHBugzilla
 from datetime import datetime
-import data
+from c_data import BAD_STATUS
+from c_data import URL
+from c_data import QUICKSEARCH
 import functions
 
 
@@ -37,10 +39,10 @@ class BugStatistics:
         :rtype: None
         """
         # Creating the bz client and bugs queries.
-        bz_client = RHBugzilla(data.URL)
+        bz_client = RHBugzilla(URL)
         query = functions.get_bs_query(self.version, self.dfg)
         bugs = bz_client.query(query)
-        link = data.QUICKSEARCH
+        link = QUICKSEARCH
         # Some integers to help calculate times.
         on_qa_bugs = 0
         verified_bugs = 0
@@ -57,7 +59,7 @@ class BugStatistics:
             return
 
         for bug in bugs:
-            if bug.resolution not in data.BAD_STATUS:
+            if bug.resolution not in BAD_STATUS:
                 ok_bugs += 1
                 link += '{}%2C'.format(bug.id)
                 status_times = functions.get_status_times(
