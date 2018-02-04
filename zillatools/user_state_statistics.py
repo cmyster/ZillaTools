@@ -3,7 +3,7 @@ Generates a single line of bug statistics per username.
 """
 from bugzilla import RHBugzilla
 import common_data
-import common_functions
+import user_state_functions
 
 
 class UserStatistics:
@@ -36,10 +36,10 @@ class UserStatistics:
         # Creating the bz client.
         bz_client = RHBugzilla(common_data.URL)
         # Creating needed queries.
-        q_on_qa = common_functions.get_on_qa_query(self.user)
-        q_open = common_functions.get_open_query(self.user)
-        q_reported = common_functions.get_reported_query(self.user)
-        q_need_info = common_functions.get_needinfo_query(self.user)
+        q_on_qa = user_state_functions.get_on_qa_query(self.user)
+        q_open = user_state_functions.get_open_query(self.user)
+        q_reported = user_state_functions.get_reported_query(self.user)
+        q_need_info = user_state_functions.get_needinfo_query(self.user)
 
         # Getting bug lists.
         b_on_qa = bz_client.query(q_on_qa)

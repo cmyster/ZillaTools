@@ -8,7 +8,7 @@ from sys import argv
 from sys import exit
 import bug_state_statistics
 import update_sheet
-from common_functions import get_bs_totals
+from bug_state_functions import get_totals
 from common_functions import get_log_name
 import bug_state_data
 import common_data
@@ -51,7 +51,7 @@ log.close()
 
 for version in common_data.VERSIONS:
     log = open("{}".format(LOG_FILE), "a")
-    totals = get_bs_totals(LOG_FILE, version[0], len(common_data.DFGS))
+    totals = get_totals(LOG_FILE, version[0], len(common_data.DFGS))
     log.write("Total averages, for {},{}\n".format(version[0], totals))
     log.close()
 

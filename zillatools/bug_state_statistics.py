@@ -6,7 +6,8 @@ from datetime import datetime
 from common_data import BAD_STATUS
 from common_data import URL
 from common_data import QUICKSEARCH
-import common_functions
+from common_functions import get_status_times
+from bug_state_functions import get_query
 
 
 class BugStatistics:
@@ -40,7 +41,7 @@ class BugStatistics:
         """
         # Creating the bz client and bugs queries.
         bz_client = RHBugzilla(URL)
-        query = common_functions.get_bs_query(self.version, self.dfg)
+        query = get_query(self.version, self.dfg)
         bugs = bz_client.query(query)
         link = QUICKSEARCH
         # Some integers to help calculate times.
@@ -62,8 +63,7 @@ class BugStatistics:
             if bug.resolution not in BAD_STATUS:
                 ok_bugs += 1
                 link += '{}%2C'.format(bug.id)
-                status_times = common_functions.get_status_times(
-                    bug.get_history_raw())
+                status_times = get_status_times(bug.get_history_raw())
                 new_time = datetime.strptime(bug.creation_time.value,
                                              '%Y%m%dT%H:%M:%S')
                 int_new_time = int(new_time.strftime('%s'))
