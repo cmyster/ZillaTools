@@ -1,8 +1,8 @@
 """
-Basic helper methodes for the main business logic.
+Basic helper methods for the main business logic.
 """
 from datetime import datetime
-import c_data
+import common_data
 
 
 def get_status_times(raw_history):
@@ -17,7 +17,7 @@ def get_status_times(raw_history):
     for events in raw_history['bugs']:
         for event in events['history']:
             for change in event['changes']:
-                for status in c_data.BUG_STATUS:
+                for status in common_data.BUG_STATUS:
                     if status == change['added']:
                         status_time[status] = int(
                             (datetime.strptime(
@@ -42,17 +42,14 @@ def get_bs_query(version, dfg):
                  chfieldfrom='{}'.format(version[1]),
                  chfieldto='{}'.format(version[2]),
                  f1='cf_internal_whiteboard',
-                 f2='keywords',
-                 f3='keywords',
                  o1='substring',
-                 o2='equals',
-                 o3='equals',
                  v1='DFG:{}'.format(dfg),
-                 v2='FutureFeature',
-                 v3='Documentation',
-                 n2='1',
-                 n3='1',
-                 include_fields=c_data.INCLUDE_FIELDS)
+                 f2='component',
+                 o2='notsubstring',
+                 v2='doc',
+                 keywords='FutureFeature, Tracking, Documentation',
+                 keywords_type='nowords',
+                 include_fields=common_data.INCLUDE_FIELDS)
     return query
 
 
@@ -64,7 +61,7 @@ def get_on_qa_query(username):
     :rtype: dict
     """
     query = dict(bug_status='ON_QA',
-                 qa_contact='{}{}'.format(username, c_data.RHDT))
+                 qa_contact='{}{}'.format(username, common_data.RHDT))
 
     return query
 
@@ -83,7 +80,7 @@ def get_open_query(username):
              'bug_status': 'ON_DEV',
              'f1': 'qa_contact',
              'o1': 'equals',
-             'v1': '{}{}'.format(username, c_data.RHDT)}
+             'v1': '{}{}'.format(username, common_data.RHDT)}
     return query
 
 
@@ -96,7 +93,7 @@ def get_reported_query(username):
     """
     query = dict(f1='reporter',
                  o1='equals',
-                 v1='{}{}'.format(username, c_data.RHDT))
+                 v1='{}{}'.format(username, common_data.RHDT))
 
     return query
 
@@ -110,7 +107,7 @@ def get_needinfo_query(username):
     """
     query = dict(f1='requestees.login_name',
                  o1='equals',
-                 v1='{}{}'.format(username, c_data.RHDT))
+                 v1='{}{}'.format(username, common_data.RHDT))
 
     return query
 

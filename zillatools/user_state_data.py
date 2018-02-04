@@ -1,9 +1,9 @@
 """
-Here userstate specific data is kept, its hard coded and not calculated.
+Here user_state specific data is kept, its hard coded and not calculated.
 """
 
-# Default userstate help.
-HELP = "Userstate generates a CSV containing data from BugZilla with\
+# Default user_state help.
+HELP = "user_state generates a CSV containing data from BugZilla with\
 the following data:\n\
     UserID: Login name.\n\
     ON_QA: Number of on ON_QA bugs on the user and a link.\n\
@@ -11,7 +11,7 @@ the following data:\n\
     Reported bugs: Number of all the bugs reported by the user and a link.\n\
     Needed info: Number of bugs with needinfo on the user and a link.\n\
 \n\
-Usage: userstate.py [ --help: print this. ; --file <CSV path/name> ]\n\
+Usage: user_state.py [ --help: print this. ; --file <CSV path/name> ]\n\
 "
 # Usernames to be tracked. No leading @domain.xyz is needed.
 USERS = [

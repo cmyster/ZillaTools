@@ -2,8 +2,8 @@
 Generates a single line of bug statistics per username.
 """
 from bugzilla import RHBugzilla
-import c_data
-import functions
+import common_data
+import common_functions
 
 
 class UserStatistics:
@@ -34,12 +34,12 @@ class UserStatistics:
         :rtype: None
         """
         # Creating the bz client.
-        bz_client = RHBugzilla(c_data.URL)
+        bz_client = RHBugzilla(common_data.URL)
         # Creating needed queries.
-        q_on_qa = functions.get_on_qa_query(self.user)
-        q_open = functions.get_open_query(self.user)
-        q_reported = functions.get_reported_query(self.user)
-        q_need_info = functions.get_needinfo_query(self.user)
+        q_on_qa = common_functions.get_on_qa_query(self.user)
+        q_open = common_functions.get_open_query(self.user)
+        q_reported = common_functions.get_reported_query(self.user)
+        q_need_info = common_functions.get_needinfo_query(self.user)
 
         # Getting bug lists.
         b_on_qa = bz_client.query(q_on_qa)
@@ -54,22 +54,22 @@ class UserStatistics:
         l_need_info = ''
 
         if len(b_on_qa) != 0:
-            l_on_qa = c_data.QUICKSEARCH
+            l_on_qa = common_data.QUICKSEARCH
             for bug in b_on_qa:
                 l_on_qa += '{}%2C'.format(bug.id)
 
         if len(b_open) != 0:
-            l_open = c_data.QUICKSEARCH
+            l_open = common_data.QUICKSEARCH
             for bug in b_open:
                 l_open += '{}%2C'.format(bug.id)
 
         if len(b_reported) != 0:
-            l_reported = c_data.QUICKSEARCH
+            l_reported = common_data.QUICKSEARCH
             for bug in b_reported:
                 l_reported += '{}%2C'.format(bug.id)
 
         if len(b_need_info) != 0:
-            l_need_info = c_data.QUICKSEARCH
+            l_need_info = common_data.QUICKSEARCH
             for bug in b_need_info:
                 l_need_info += '{}%2C'.format(bug.id)
 

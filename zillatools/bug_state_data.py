@@ -1,9 +1,9 @@
 """
-Here bugstate specific data is kept, its hard coded and not calculated.
+Here bug_state specific data is kept, its hard coded and not calculated.
 """
 
-# Default bugstate help.
-HELP = "Bugstate generates a CSV containing data from BugZilla with\
+# Default bug_state help.
+HELP = "bug_state generates a CSV containing data from BugZilla with\
 the following data:\n\
     DFG name: Internal group name.\n\
     Version: OpenStack version.\n\
@@ -16,10 +16,10 @@ change from ON_QA to VERIFIED status.\n\
     Average time to close: Average time it took \"good\" bugs to change from\
 NEW to CLOSED.\n\
 \n\
-Usage: bugstate.py [ --help: print this. ; --file <CSV path/name> ]\n\
+Usage: bug_state.py [ --help: print this. ; --file <CSV path/name> ]\n\
 "
 
-# Bugstate CSV headers
+# bug_state CSV headers
 HEADERS = 'DFG,Version,Total,Filtered,To ON_QA,To VERIFIED,To CLOSE,LINK'
 
 # Google sheet that holds bug statistics.
