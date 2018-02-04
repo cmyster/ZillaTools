@@ -18,7 +18,7 @@ if '--help' in argv:
     exit(0)
 
 # Setting a default name for the CSV file.
-LOG_FILE = get_log_name(argv, 'bugstate.csv')
+LOG_FILE = get_log_name(argv, 'bug_state.csv')
 
 # This first line of output serves as columns titles.
 log = open(LOG_FILE, "w")
