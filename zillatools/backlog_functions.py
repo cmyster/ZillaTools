@@ -54,6 +54,3 @@ def get_query(dfg):
         v10='INSUFFICIENT_DATA',
     )
     return query
-
-
-

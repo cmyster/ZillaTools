@@ -2,7 +2,6 @@
 Generates a single line of bug statistics for a combination of DFG and version.
 """
 from bugzilla import RHBugzilla
-from datetime import datetime
 from common_data import BAD_STATUS, URL, QUICKSEARCH
 from common_functions import get_status_times
 from bug_state_functions import get_query

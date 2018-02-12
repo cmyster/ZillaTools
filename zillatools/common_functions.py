@@ -87,7 +87,7 @@ def get_weeks_dates(versions):
     :type versions: list
     :rtype int
     """
-    # Creating dates from Year/Month/Day from the beginning of the first version
+    # Creating dates from Year/Month/Day from the first version's beginning
     # to the end of the last.
     start_date = date(
         int((versions[0][1].split('-'))[0]),

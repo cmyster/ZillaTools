@@ -1,5 +1,5 @@
 """
-Here bug_state specific data is kept, its hard coded and not calculated.
+Here backlog script specific data is kept, its hard coded and not calculated.
 """
 
 # Default bug_state help.

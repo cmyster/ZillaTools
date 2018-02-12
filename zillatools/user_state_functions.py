@@ -24,14 +24,30 @@ def get_open_query(username):
     :param username: str
     :rtype: dict
     """
-    query = {'bug_status': 'NEW',
-             'bug_status': 'ASSIGNED',
-             'bug_status': 'POST',
-             'bug_status': 'MODIFIED',
-             'bug_status': 'ON_DEV',
-             'f1': 'qa_contact',
-             'o1': 'equals',
-             'v1': '{}{}'.format(username, common_data.RHDT)}
+    query = dict(
+        f1='qa_contact',
+        f2='OP',
+        f3='bug_status',
+        f4='bug_status',
+        f5='bug_status',
+        f6='bug_status',
+        f7='bug_status',
+        f9='CP',
+        j2='OR',
+        o1='substring',
+        o3='equals',
+        o4='equals',
+        o5='equals',
+        o6='equals',
+        o7='equals',
+        query_format='advanced',
+        v1='augol@redhat.com',
+        v3='NEW',
+        v4='ASSIGNED',
+        v5='POST',
+        v6='MODIFIED',
+        v7='ON_QA',
+    )
     return query
 
 
