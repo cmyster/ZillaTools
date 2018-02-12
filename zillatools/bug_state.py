@@ -1,7 +1,7 @@
 #!/usr/bin/python2.7
 """
 This script goes over lists of bugs per predefined bugzilla query and outputs
-a CSV with data to be later digested elsewhere.
+a CSV with data to be digested elsewhere.
 """
 from threading import Thread
 from sys import argv
@@ -52,7 +52,7 @@ log.close()
 for version in common_data.VERSIONS:
     log = open("{}".format(LOG_FILE), "a")
     totals = get_totals(LOG_FILE, version[0], len(common_data.DFGS))
-    log.write("Total averages, for {},{}\n".format(version[0], totals))
+    log.write("Total averages, {},{}\n".format(version[0], totals))
     log.close()
 
 update = update_sheet.UpdateSheet(

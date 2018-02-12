@@ -1,29 +1,7 @@
 """
 Basic helper methods for the main business logic.
 """
-from datetime import datetime
 import common_data
-
-
-def get_status_times(raw_history):
-    # type: (dict) -> dict
-    """
-    Parsing a bug's raw history and returning a dictionary of the bug's change
-    over time with a status,date format.
-    :type raw_history: dict
-    :rtype: dict
-    """
-    status_time = {}
-    for events in raw_history['bugs']:
-        for event in events['history']:
-            for change in event['changes']:
-                for status in common_data.BUG_STATUS:
-                    if status == change['added']:
-                        status_time[status] = int(
-                            (datetime.strptime(
-                                event['when'].value,
-                                '%Y%m%dT%H:%M:%S')).strftime('%s'))
-    return status_time
 
 
 def get_query(version, dfg):
@@ -43,72 +21,13 @@ def get_query(version, dfg):
                  chfieldto='{}'.format(version[2]),
                  f1='cf_internal_whiteboard',
                  o1='substring',
-                 v1='DFG:{}'.format(dfg),
+                 v1='{}'.format(dfg),
                  f2='component',
                  o2='notsubstring',
                  v2='doc',
                  keywords='FutureFeature, Tracking, Documentation',
                  keywords_type='nowords',
                  include_fields=common_data.INCLUDE_FIELDS)
-    return query
-
-
-def get_on_qa_query(username):
-    # type: (str) -> dict
-    """
-    Returns a query of all bugs that are ON_QA for a qa_contact.
-    :param username: str
-    :rtype: dict
-    """
-    query = dict(bug_status='ON_QA',
-                 qa_contact='{}{}'.format(username, common_data.RHDT))
-
-    return query
-
-
-def get_open_query(username):
-    # type: (str) -> dict
-    """
-    Returns a query of all bugs that are still open for a qa_contact.
-    :param username: str
-    :rtype: dict
-    """
-    query = {'bug_status': 'NEW',
-             'bug_status': 'ASSIGNED',
-             'bug_status': 'POST',
-             'bug_status': 'MODIFIED',
-             'bug_status': 'ON_DEV',
-             'f1': 'qa_contact',
-             'o1': 'equals',
-             'v1': '{}{}'.format(username, common_data.RHDT)}
-    return query
-
-
-def get_reported_query(username):
-    # type: (str) -> dict
-    """
-    Returns a query of all bugs that were reported by a qa_contact.
-    :param username: str
-    :rtype: dict
-    """
-    query = dict(f1='reporter',
-                 o1='equals',
-                 v1='{}{}'.format(username, common_data.RHDT))
-
-    return query
-
-
-def get_needinfo_query(username):
-    # type: (str) -> dict
-    """
-    Returns a query of all bugs that have a need info flag on a qa_contact.
-    :param username: str
-    :rtype: dict
-    """
-    query = dict(f1='requestees.login_name',
-                 o1='equals',
-                 v1='{}{}'.format(username, common_data.RHDT))
-
     return query
 
 
