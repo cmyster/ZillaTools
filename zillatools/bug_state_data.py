@@ -20,7 +20,8 @@ Usage: bug_state.py [ --help: print this. ; --file <CSV path/name> ]\n\
 "
 
 # bug_state CSV headers
-HEADERS = 'DFG,Version,Total,Filtered,To ON_QA,To VERIFIED,To CLOSE,LINK'
+HEADERS = 'DFG,Version,Total,Filtered,Days from NEW to ON_QA,\
+    Days from ON_QA to VERIFIED,Days from NEW to CLOSE,LINK'
 
 # Google sheet that holds bug statistics.
 SHEET = '1hJkSWyzB2dCOlajZgw2ZmVrjwX7fUFSDQm2nLF461_I'
