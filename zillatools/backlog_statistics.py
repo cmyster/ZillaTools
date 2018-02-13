@@ -48,6 +48,8 @@ class BacklogStatistics:
 
         counter = [0] * len(int_dates)
         for bug in bugs:
+            if not bug.internal_whiteboard.startswith(self.dfg):
+                continue
             status_times = get_status_times(
                 bug.get_history_raw(),
                 bug.creation_time.value,
