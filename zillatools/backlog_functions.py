@@ -13,6 +13,8 @@ def get_query(dfg):
     """
     query = dict(
         include_fields=INCLUDE_FIELDS,
+        classification='Red Hat',
+        product='Red Hat OpenStack',
         keywords='Documentation, FutureFeature, Tracking',
         keywords_type='nowords',
         order='Bug Number',
