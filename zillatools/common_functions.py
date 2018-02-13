@@ -31,7 +31,7 @@ def get_status_times(raw_history, creation_time):
 
 
 def convert_bz_str_epoch(str_date):
-    # type: (str) -> datetime
+    # type: (str) -> int
     """
     Gets a date in string format (YYYY-MM-DD) and returns a datetime object.
     :type str_date: str
@@ -44,7 +44,7 @@ def convert_bz_str_epoch(str_date):
 def get_log_name(argv, name):
     # type: (list, str) -> str
     """
-    Defining a logfile and making sure its writable.
+    Defining a logfile and making sure its writeable.
     :type argv: list
     :type name: str
     :rtype: str
@@ -85,24 +85,21 @@ def get_weeks_dates(versions):
     Returns a list of strings ('YYYY-MM-DD',) dates from a range created from
     the beginning of the first version to the end of the last.
     :type versions: list
-    :rtype int
+    :rtype list
     """
     # Creating dates from Year/Month/Day from the first version's beginning
-    # to the end of the last.
-    start_date = date(
-        int((versions[0][1].split('-'))[0]),
-        int((versions[0][1].split('-'))[1]),
-        int((versions[0][1].split('-'))[2]),
-    )
-    end_date = date(
-        int((versions[len(versions) - 1][2].split('-'))[0]),
-        int((versions[len(versions) - 1][2].split('-'))[1]),
-        int((versions[len(versions) - 1][2].split('-'))[2]),
-    )
+    # to the current date.
+    start_date = datetime.strptime(versions[0][1], '%Y-%m-%d')
+    end_date = datetime.now()
 
-    # Setting the starting time to a Sunday for consistency.
-    if start_date.today().weekday() != 1:
-        start_date - timedelta(days=(start_date.today().weekday() + 1))
+    # Setting the starting date to the Wednesday prior to the beginning of the
+    # first version.
+    if int(start_date.strftime('%w')) != 3:
+        start_date -= timedelta(days=(int(start_date.strftime('%w'))) + 4)
+    # Setting the end date to the next Wednesday from today.
+    if int(end_date.strftime('%w')) != 3:
+        end_date -= timedelta(days=int(end_date.strftime('%w')))
+        end_date += timedelta(days=10)
     # Number of weeks to work on.
     weeks = (end_date - start_date).days / 7
     # Initialize the list with the first date.

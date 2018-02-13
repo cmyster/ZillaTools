@@ -24,7 +24,7 @@ def get_query(version, dfg):
                  v1='{}'.format(dfg),
                  f2='component',
                  o2='notsubstring',
-                 v2='doc',
+                 v2='documentation',
                  keywords='FutureFeature, Tracking, Documentation',
                  keywords_type='nowords',
                  include_fields=common_data.INCLUDE_FIELDS)

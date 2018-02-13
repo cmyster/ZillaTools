@@ -54,7 +54,7 @@ class BacklogStatistics:
             )
 
             start_week = bl(int_dates, status_times['NEW'])
-            if start_week >= len(int_dates) - 1:
+            if start_week > (len(int_dates) - 1):
                 continue
 
             if 'CLOSED' in status_times:
@@ -64,7 +64,7 @@ class BacklogStatistics:
             else:
                 end_week = len(int_dates) - 1
 
-            if 0 <= start_week < end_week:
+            if 0 <= start_week <= end_week:
                 for i in range(start_week, end_week):
                     counter[i] += 1
 

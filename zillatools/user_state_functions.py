@@ -41,7 +41,7 @@ def get_open_query(username):
         o6='equals',
         o7='equals',
         query_format='advanced',
-        v1='augol@redhat.com',
+        v1='{}{}'.format(username, common_data.RHDT),
         v3='NEW',
         v4='ASSIGNED',
         v5='POST',
