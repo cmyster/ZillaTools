@@ -33,6 +33,9 @@ BAD_STATUS = [
 ]
 
 
+# Bugs started to be assigned to DFGs from this date.
+START_DATE = '2013-07-01'
+
 # RHOSP versions as coded into BZ with starting and ending dates.
 VERSIONS = [
     ['10.0 (Newton)', '2016-07-28', '2016-12-15'],

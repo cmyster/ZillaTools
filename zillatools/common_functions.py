@@ -79,25 +79,31 @@ def get_log_name(argv, name):
     return log_file
 
 
-def get_weeks_dates(versions):
-    # type: (list) -> list
+def get_weeks_dates(start_date):
+    # type: (str) -> list
     """
     Returns a list of strings ('YYYY-MM-DD',) dates from a range created from
-    the beginning of the first version to the end of the last.
-    :type versions: list
+    the previous Wednesday before start_date to the next Wednesday from today.
+    :type start_date: str
     :rtype list
     """
     # Creating dates from Year/Month/Day from the first version's beginning
     # to the current date.
-    start_date = datetime.strptime(versions[0][1], '%Y-%m-%d')
+    start_date = datetime.strptime(start_date, '%Y-%m-%d')
     end_date = datetime.now()
 
     # Setting the starting date to the Wednesday prior to the beginning of the
     # first version.
-    if int(start_date.strftime('%w')) != 3:
+    if int(start_date.strftime('%w')) < 3:
         start_date -= timedelta(days=(int(start_date.strftime('%w'))) + 4)
+    if int(start_date.strftime('%w')) > 3:
+        start_date -= timedelta(days=int(start_date.strftime('%w')))
+        start_date += timedelta(days=3)
     # Setting the end date to the next Wednesday from today.
-    if int(end_date.strftime('%w')) != 3:
+    if int(end_date.strftime('%w')) < 3:
+        end_date -= timedelta(days=int(end_date.strftime('%w')))
+        end_date += timedelta(days=3)
+    if int(end_date.strftime('%w')) > 3:
         end_date -= timedelta(days=int(end_date.strftime('%w')))
         end_date += timedelta(days=10)
     # Number of weeks to work on.

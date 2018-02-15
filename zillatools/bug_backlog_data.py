@@ -1,10 +1,10 @@
 """
-Here backlog script specific data is kept, its hard coded and not calculated.
+Bug backlog script specific data is kept, its hard coded and not calculated.
 """
 
 # Default bug_state help.
-HELP = "backlog generates a CSV containing data from BugZilla with\
-the what constitutes as a backlog per DFG.\n\
+HELP = "bug_backlog generates a CSV containing data from BugZilla with\
+the what constitutes as a bug backlog per DFG.\n\
 There are two sheets that are updated: pre status and per release.\n\
 \n\
 Usage: bug_backlog.py [ --help: print this. ; --file <CSV path/name> ]\n\
