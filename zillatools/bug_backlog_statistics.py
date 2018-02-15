@@ -5,7 +5,7 @@ from bugzilla import RHBugzilla
 from common_data import URL
 from bisect import bisect_left as bl
 from common_functions import get_status_times, convert_bz_str_epoch
-import backlog_functions
+import bug_backlog_functions
 
 
 class BacklogStatistics:
@@ -39,7 +39,7 @@ class BacklogStatistics:
         """
         # Creating the bz client and bug query.
         bz_client = RHBugzilla(URL)
-        query = backlog_functions.get_query(self.dfg)
+        query = bug_backlog_functions.get_query(self.dfg)
         bugs = bz_client.query(query)
         # Converting all the dates to ints for easier search within ranges.
         int_dates = []

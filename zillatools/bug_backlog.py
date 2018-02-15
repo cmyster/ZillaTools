@@ -7,20 +7,20 @@ from threading import Thread
 from sys import argv
 from sys import exit
 import update_sheet
-import backlog_data
+import bug_backlog_data
 from common_functions import get_log_name, get_weeks_dates
 import common_data
-import backlog_statistics
+import bug_backlog_statistics
 
 if '--help' in argv:
-    print('{}'.format(backlog_data.HELP))
+    print('{}'.format(bug_backlog_data.HELP))
     exit(0)
 
 # Getting the weeks to work on, and these serve as headers as well.
 dates = get_weeks_dates(common_data.VERSIONS)
 
 # Setting a default name for the CSV file.
-LOG_FILE = get_log_name(argv, 'backlog.csv')
+LOG_FILE = get_log_name(argv, 'bug_backlog.csv')
 
 # This first line of output serves as columns titles.
 log = open(LOG_FILE, "w")
@@ -33,7 +33,7 @@ RESULTS = [None] * len(common_data.DFGS)
 THREAD_INDEX = 0
 
 for dfg in common_data.DFGS:
-    STATS = backlog_statistics.BacklogStatistics(
+    STATS = bug_backlog_statistics.BacklogStatistics(
         dfg, dates, RESULTS, THREAD_INDEX)
     THREADS[THREAD_INDEX] = Thread(target=STATS.main)
     THREADS[THREAD_INDEX].daemon = True
@@ -51,11 +51,11 @@ log.write("".join(RESULTS))
 log.close()
 
 update = update_sheet.UpdateSheet(
-    backlog_data.SHEET,
+    bug_backlog_data.SHEET,
     common_data.API_SECRET,
     common_data.API_TOKEN,
     LOG_FILE,
-    backlog_data.RANGE,
+    bug_backlog_data.RANGE,
 )
 
 update()

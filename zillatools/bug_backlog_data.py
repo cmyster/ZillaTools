@@ -7,7 +7,7 @@ HELP = "backlog generates a CSV containing data from BugZilla with\
 the what constitutes as a backlog per DFG.\n\
 There are two sheets that are updated: pre status and per release.\n\
 \n\
-Usage: backlog.py [ --help: print this. ; --file <CSV path/name> ]\n\
+Usage: bug_backlog.py [ --help: print this. ; --file <CSV path/name> ]\n\
 "
 
 # Google sheet that holds bug statistics.
