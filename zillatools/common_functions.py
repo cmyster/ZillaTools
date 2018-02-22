@@ -103,7 +103,7 @@ def get_weeks_dates(start_date):
     if int(end_date.strftime('%w')) < 3:
         end_date -= timedelta(days=int(end_date.strftime('%w')))
         end_date += timedelta(days=3)
-    if int(end_date.strftime('%w')) > 3:
+    if int(end_date.strftime('%w')) >= 3:
         end_date -= timedelta(days=int(end_date.strftime('%w')))
         end_date += timedelta(days=10)
     # Number of weeks to work on.
