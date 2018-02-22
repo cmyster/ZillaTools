@@ -60,7 +60,7 @@ update = update_sheet.UpdateSheet(
     common_data.API_SECRET,
     common_data.API_TOKEN,
     LOG_FILE,
-    bug_state_data.SHEET_RANGE,
+    common_data.SHEET_RANGE,
 )
 
 update()

@@ -55,7 +55,7 @@ update = update_sheet.UpdateSheet(
     common_data.API_SECRET,
     common_data.API_TOKEN,
     LOG_FILE,
-    bug_backlog_data.RANGE,
+    common_data.RANGE,
 )
 
 update()

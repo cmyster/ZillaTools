@@ -12,4 +12,3 @@ Usage: rfe_backlog.py [ --help: print this. ; --file <CSV path/name> ]\n\
 
 # Google sheet that holds bug statistics.
 SHEET = '1mqTunAjY8kVVsWc-zUlTxXr_x8h5HHtWAbvW1m1NSFY'
-RANGE = 'DATA!A:LZ'

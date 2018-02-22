@@ -25,4 +25,3 @@ HEADERS = 'DFG,Version,Total,Filtered,Days from NEW to ON_QA,\
 
 # Google sheet that holds bug statistics.
 SHEET = '1hJkSWyzB2dCOlajZgw2ZmVrjwX7fUFSDQm2nLF461_I'
-SHEET_RANGE = 'DATA!A:Z'

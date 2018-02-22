@@ -91,3 +91,6 @@ API_SECRET = 'client_secret.json'
 
 # Token for BugStatistics.
 API_TOKEN = 'sheets.googleapis.com-python.json'
+
+# Common range for sheets: Start at A1 and be open ended.
+RANGE = 'DATA!A1'

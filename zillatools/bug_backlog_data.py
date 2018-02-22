@@ -12,4 +12,3 @@ Usage: bug_backlog.py [ --help: print this. ; --file <CSV path/name> ]\n\
 
 # Google sheet that holds bug statistics.
 SHEET = '1j4BnO41kwwSRSEapp5_aHb9bJa3pFuhFK2xK9OPfg5w'
-RANGE = 'DATA!A:LZ'
