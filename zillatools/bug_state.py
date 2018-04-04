@@ -5,7 +5,6 @@ a CSV with data to be digested elsewhere.
 """
 from threading import Thread
 from sys import argv
-from sys import exit
 import bug_state_statistics
 import update_sheet
 from bug_state_functions import get_totals
@@ -14,16 +13,16 @@ import bug_state_data
 import common_data
 
 if '--help' in argv:
-    print('{}'.format(bug_state_data.HELP))
+    print ('{}').format(bug_state_data.HELP)
     exit(0)
 
 # Setting a default name for the CSV file.
 LOG_FILE = get_log_name(argv, 'bug_state.csv')
 
 # This first line of output serves as columns titles.
-log = open(LOG_FILE, "w")
-log.write("{}\n".format(bug_state_data.HEADERS))
-log.close()
+LOG = open(LOG_FILE, "w")
+LOG.write("{}\n".format(bug_state_data.HEADERS))
+LOG.close()
 
 # These lists are globals for THREADS and RESULTS and need to have fixed size.
 THREADS = [None] * len(common_data.DFGS) * len(common_data.VERSIONS)
@@ -36,18 +35,18 @@ for dfg in common_data.DFGS:
             version, dfg, RESULTS, THREAD_INDEX)
         THREADS[THREAD_INDEX] = Thread(target=STATS.main)
         THREADS[THREAD_INDEX].daemon = True
-        print('Starting thread for {} in {}'.format(dfg, version[0]))
+        print ('Starting thread for {} in {}').format(dfg, version[0])
         THREADS[THREAD_INDEX].start()
         THREAD_INDEX += 1
 
-print('Waiting for threads to finish.')
+print ('Waiting for threads to finish.')
 for index in range(len(THREADS)):
     THREADS[index].join()
 
-print 'Writing to {}'.format(LOG_FILE)
-log = open("{}".format(LOG_FILE), "a")
-log.write("".join(RESULTS))
-log.close()
+print ('Writing to {}').format(LOG_FILE)
+LOG = open("{}".format(LOG_FILE), "a")
+LOG.write("".join(RESULTS))
+LOG.close()
 
 for version in common_data.VERSIONS:
     log = open("{}".format(LOG_FILE), "a")
@@ -55,7 +54,7 @@ for version in common_data.VERSIONS:
     log.write("Total averages, {},{}\n".format(version[0], totals))
     log.close()
 
-update = update_sheet.UpdateSheet(
+UPDATE = update_sheet.UpdateSheet(
     bug_state_data.SHEET,
     common_data.API_SECRET,
     common_data.API_TOKEN,
@@ -63,7 +62,7 @@ update = update_sheet.UpdateSheet(
     common_data.RANGE,
 )
 
-update()
+UPDATE()
 
 # Finally
-print "DONE!"
+print ("DONE!")

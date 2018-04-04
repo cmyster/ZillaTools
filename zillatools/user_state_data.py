@@ -16,16 +16,15 @@ Usage: user_state.py [ --help: print this. ; --file <CSV path/name> ]\n\
 # Usernames to be tracked. No leading @domain.xyz is needed.
 USERS = [
     'agurenko',
+    'achernet',
     'ahrechan',
     'augol',
-    'dbrusilo',
     'dkholodo',
     'iovadia',
     'jhajyahy',
     'mcornea',
     'mlammon',
     'ohochman',
-    'opavlenk',
     'rbartal',
     'rrasouli',
     'sasha',

@@ -77,11 +77,24 @@ class BugStatistics:
                     time_to_verify += (status_times['VERIFIED'] -
                                        status_times['ON_QA'])
 
-                # Bugs that were closed due to an issue are not used.
-                if 'CLOSED' in status_times.keys():
-                    closed_bugs += 1
-                    time_to_close += (status_times['CLOSED'] -
-                                      status_times['NEW'])
+                """
+                With CLOSED bugs we can get negative days-to-close numbers:
+                Bugs that were closed due to an issue are not used, 
+                therefore we are looking for bugs that became CLOSED after 
+                being VERIFIED.
+                CLOSED needs to be the latest entry. If it is not, 
+                than this is a bug that was reopened, and we don't need to 
+                take it into consideration when calculating time to close 
+                because it will get another CLOSED in the future to 
+                overwrite the current one.
+                """
+                if 'CLOSED' in status_times.keys() \
+                        and 'VERIFIED' in status_times.keys():
+                    latest = max(status_times.values())
+                    if status_times['CLOSED'] == latest:
+                        closed_bugs += 1
+                        time_to_close += (status_times['CLOSED'] -
+                                          status_times['VERIFIED'])
 
         # Removing last ',' from the link.
         link = link[:-3]

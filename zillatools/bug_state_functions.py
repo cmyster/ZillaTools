@@ -44,7 +44,7 @@ def get_totals(logfile, version, dfgs):
         log = open(logfile, "r")
         log.close()
     except IOError as e:
-        print 'IOError: {0} - {1}'.format(e.errno, e.strerror)
+        print ('IOError: {0} - {1}').format(e.errno, e.strerror)
         exit(1)
 
     total = 0
