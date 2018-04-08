@@ -66,29 +66,47 @@ class BugStatistics:
                     bug.creation_time.value,
                 )
 
+                """
+                Bugs go into 3 stages:
+
+                NEW      => current status >= ON_QA    - Development stage.
+                ON_QA    => current status >= VERIFIED - Testing stage.
+                VERIFIED => current status >= CLOSED   - Done.
+
+                If the lower limit of the stages above is not the newest for
+                that stage, it means that the bug was re-opened or failed QA.
+                status_times is a dict (unsortable), so to make sure that
+                a status is the youngest for a certain range, we remove the 
+                next statuses for the next stages and test the time.
+                """
+
                 if 'ON_QA' in status_times.keys():
-                    on_qa_bugs += 1
-                    time_to_on_qa += (status_times['ON_QA'] -
-                                      status_times['NEW'])
+                    temp_d = status_times.copy()
+                    for status in ['VERIFIED', 'RELEASE_PENDING', 'CLOSED']:
+                        if status in temp_d.keys():
+                            del temp_d[status]
+
+                    youngest = max(temp_d.values())
+
+                    if status_times['ON_QA'] == youngest:
+                        on_qa_bugs += 1
+                        time_to_on_qa += (status_times['ON_QA'] -
+                                          status_times['NEW'])
 
                 """
                 Statistics for verifying a bug will be gathered only for bugs
-                that have VERIFIED state and ON_QA because bugs can get to be
-                marked as VERIFIED without passing through QA.
-                Also the age of the VERIFIED state needs to be te youngest
-                except RELEASE_PENDING or CLOSED otherwise the bug was
-                reopened or have failed QA.
+                that have VERIFIED state AND ON_QA because bugs can get marked
+                as VERIFIED without going through QA.
                 """
                 if 'VERIFIED' in status_times.keys() \
                         and 'ON_QA' in status_times.keys():
-                    closed_less = status_times
-                    if 'CLOSED' in closed_less.keys():
-                        closed_less.pop('CLOSED')
-                    if 'RELEASE_PENDING' in closed_less.keys():
-                        closed_less.pop('RELEASE_PENDING')
+                    temp_d = status_times.copy()
+                    for status in ['RELEASE_PENDING', 'CLOSED']:
+                        if status in temp_d.keys():
+                            del temp_d[status]
 
-                    latest = max(closed_less.values())
-                    if status_times['VERIFIED'] == latest:
+                    youngest = max(temp_d.values())
+                    if status_times['VERIFIED'] == youngest:
                         verified_bugs += 1
                         time_to_verify += (status_times['VERIFIED'] -
                                            status_times['ON_QA'])
@@ -98,14 +116,12 @@ class BugStatistics:
                 Bugs that were closed due to an issue are not used, therefore
                 we are looking for bugs that were CLOSED after being VERIFIED.
                 CLOSED needs to be the latest entry. If it is not, than this
-                is a bug that was reopened, and we don't need to take it into
-                consideration when calculating time to close because it will
-                get another CLOSED in the future to overwrite the current one.
+                is a bug was reopened.
                 """
                 if 'CLOSED' in status_times.keys() \
                         and 'VERIFIED' in status_times.keys():
-                    latest = max(status_times.values())
-                    if status_times['CLOSED'] == latest:
+                    youngest = max(status_times.values())
+                    if status_times['CLOSED'] == youngest:
                         closed_bugs += 1
                         time_to_close += (status_times['CLOSED'] -
                                           status_times['VERIFIED'])
