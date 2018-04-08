@@ -1,5 +1,6 @@
 """
-Generates a single line of bug statistics for a combination of DFG and version.
+Generates averages of times in days it takes to switch from NEW to ON_QA, from
+ON_QA to VERIFIED and from VERIFIED to CLOSED per DFG per version.
 """
 from bugzilla import RHBugzilla
 from common_data import BAD_STATUS, URL, QUICKSEARCH
@@ -9,9 +10,9 @@ from bug_state_functions import get_query
 
 class BugStatistics:
     """
-    Generates a single CSV line. It is returned as string item inside a list in
-    the position that corresponds to the calling thread number to be merged in
-    the calling class.
+    Generates a single CSV line. It is returned as string item inside a list
+    in the position that corresponds to the calling thread number to be merged
+    in the calling class.
 
     :rtype: list
     """
@@ -70,23 +71,36 @@ class BugStatistics:
                     time_to_on_qa += (status_times['ON_QA'] -
                                       status_times['NEW'])
 
-                # Bugs that skip ON_QA are not used.
+                """
+                Statistics for verifying a bug will be gathered only for bugs
+                that have VERIFIED state and ON_QA because bugs can get to be
+                marked as VERIFIED without passing through QA.
+                Also the age of the VERIFIED state needs to be te youngest
+                except RELEASE_PENDING or CLOSED otherwise the bug was
+                reopened or have failed QA.
+                """
                 if 'VERIFIED' in status_times.keys() \
                         and 'ON_QA' in status_times.keys():
-                    verified_bugs += 1
-                    time_to_verify += (status_times['VERIFIED'] -
-                                       status_times['ON_QA'])
+                    closed_less = status_times
+                    if 'CLOSED' in closed_less.keys():
+                        closed_less.pop('CLOSED')
+                    if 'RELEASE_PENDING' in closed_less.keys():
+                        closed_less.pop('RELEASE_PENDING')
+
+                    latest = max(closed_less.values())
+                    if status_times['VERIFIED'] == latest:
+                        verified_bugs += 1
+                        time_to_verify += (status_times['VERIFIED'] -
+                                           status_times['ON_QA'])
 
                 """
                 With CLOSED bugs we can get negative days-to-close numbers:
-                Bugs that were closed due to an issue are not used, 
-                therefore we are looking for bugs that became CLOSED after 
-                being VERIFIED.
-                CLOSED needs to be the latest entry. If it is not, 
-                than this is a bug that was reopened, and we don't need to 
-                take it into consideration when calculating time to close 
-                because it will get another CLOSED in the future to 
-                overwrite the current one.
+                Bugs that were closed due to an issue are not used, therefore
+                we are looking for bugs that were CLOSED after being VERIFIED.
+                CLOSED needs to be the latest entry. If it is not, than this
+                is a bug that was reopened, and we don't need to take it into
+                consideration when calculating time to close because it will
+                get another CLOSED in the future to overwrite the current one.
                 """
                 if 'CLOSED' in status_times.keys() \
                         and 'VERIFIED' in status_times.keys():
