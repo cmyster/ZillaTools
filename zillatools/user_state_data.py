@@ -24,6 +24,7 @@ USERS = [
     'jhajyahy',
     'mcornea',
     'mlammon',
+    'nlevinki',
     'ohochman',
     'rbartal',
     'rrasouli',
