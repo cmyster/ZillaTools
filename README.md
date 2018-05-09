@@ -36,6 +36,13 @@ a specific group.
 Goes over a list of predefined users and fetches specific data on each and
 saves that as a CSV.
 
+## BugBacklog
+Goes over the umber of bugs that are open per RFE per week since 01/01/2017
+and saves that data.
+
+## RFEBacklog
+Same as bug backlog, but for open RFEs.
+
 ### Usage
 Run the script directly from CLI to produce a CSV file that contains all the
 data. You can add --help for help or --file '\<filename\>' to change the 
