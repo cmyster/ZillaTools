@@ -4,18 +4,18 @@ This script goes over individual contributes and fetches data and statistics.
 """
 from threading import Thread
 from sys import argv
+import common_functions
 import user_state_statistics
 import update_sheet
-from common_functions import get_log_name
 import user_state_data
 import common_data
 
 if '--help' in argv:
-    print '{}'.format(user_state_data.HELP)
+    print("{}").format(user_state_data.HELP)
     exit(0)
 
 # Setting a default name for the log file.
-LOG_FILE = get_log_name(argv, 'user_state.csv')
+LOG_FILE = common_functions.get_log_name(argv, 'user_state.csv')
 
 # This first line of output serves as columns titles.
 LOG = open(LOG_FILE, "w")
@@ -31,17 +31,18 @@ for user in user_state_data.USERS:
     STATS = user_state_statistics.UserStatistics(user, RESULTS, THREAD_INDEX)
     THREADS[THREAD_INDEX] = Thread(target=STATS.run)
     THREADS[THREAD_INDEX].daemon = True
-    print 'Starting thread for {}'.format(user)
+    print("Starting thread for {}").format(user)
     THREADS[THREAD_INDEX].start()
     THREAD_INDEX += 1
 
-print 'Waiting for threads to finish.'
+print("Waiting for threads to finish.")
 for index in range(len(THREADS)):
     THREADS[index].join()
 
-print 'Writing to {}'.format(LOG_FILE)
+print("Writing to {}").format(LOG_FILE)
 LOG = open("{}".format(LOG_FILE), "a")
 LOG.write("".join(RESULTS))
+LOG.write("{}").format(common_functions.get_time_now())
 LOG.close()
 
 UPDATE = update_sheet.UpdateSheet(
@@ -55,4 +56,4 @@ UPDATE = update_sheet.UpdateSheet(
 UPDATE()
 
 # Finally
-print "DONE!"
+print("DONE!")

@@ -1,7 +1,7 @@
 """
 Basic helper methods for the main business logic.
 """
-from datetime import datetime, date, timedelta
+from datetime import datetime, timedelta
 import common_data
 
 
@@ -61,20 +61,20 @@ def get_log_name(argv, name):
                     log = open("{}".format(log_file), "w")
                     log.close()
                 except IOError as e:
-                    print 'IOError: {0} - {1}'.format(e.errno, e.strerror)
+                    print('IOError: {0} - {1}').format(e.errno, e.strerror)
                     exit(1)
         except IndexError as e:
-            print 'Missing argument\n{}'.format(e)
+            print('Missing argument\n{}').format(e)
             exit(1)
 
     # If there are more arguments, print ignore message.
     if len(argv) > 3:
-        print 'Ignoring arguments: ',
+        print('Ignoring arguments: '),
         for i in range(3, len(argv)):
-            print "{} ".format(argv[i]),
-        print ''
+            print("{} ").format(argv[i]),
+        print('')
 
-    print 'Data is saved to {}'.format(log_file)
+    print('Data is saved to {}').format(log_file)
 
     return log_file
 
@@ -116,3 +116,13 @@ def get_weeks_dates(start_date):
         dates.append(start_date.strftime('%Y-%m-%d'))
 
     return dates
+
+
+def get_time_now():
+    # type: (none) -> str
+    """
+    Returns now from datetime. This happens here so we don't need to include
+    datetime in other classes.
+    """
+    now = str(datetime.now())
+    return now
