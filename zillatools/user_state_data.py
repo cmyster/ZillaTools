@@ -41,7 +41,6 @@ USERS = [
 HEADERS = 'UserID,'\
     'ON_QA,link,'\
     'Open bugs,link,'\
-    'Reported bugs,link,'\
     'needinfo,link,'
 
 # Google sheet that holds user statistics.

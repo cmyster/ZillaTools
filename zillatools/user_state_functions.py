@@ -51,16 +51,21 @@ def get_open_query(username):
     return query
 
 
-def get_reported_query(username):
-    # type: (str) -> dict
+def get_reported_query(username, version):
+    # type: (str, str) -> dict
     """
-    Returns a query of all bugs that were reported by a qa_contact.
+    Returns a query of all bugs that were reported by a qa_contact
+    in a specific version.
     :param username: str
+    :param version: str
     :rtype: dict
     """
-    query = dict(f1='reporter',
-                 o1='equals',
-                 v1='{}{}'.format(username, common_data.RHDT))
+    query = dict(
+        f1='reporter',
+        o1='equals',
+        v1='{}{}'.format(username, common_data.RHDT),
+        version='{}'.format(version),
+    )
 
     return query
 
@@ -77,3 +82,19 @@ def get_needinfo_query(username):
                  v1='{}{}'.format(username, common_data.RHDT))
 
     return query
+
+
+def gen_per_version_headers():
+    # type: (none) -> str
+    """
+    Returns a string to be used as CSV header that looks like:
+    'version X,link,version Y,link, ...'
+    :return: str
+    """
+    headers = ''
+    for version in common_data.VERSIONS:
+        headers += "reported in {},link,".format(version[0])
+    return headers
+
+
+

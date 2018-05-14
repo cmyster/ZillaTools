@@ -6,6 +6,7 @@ from threading import Thread
 from sys import argv
 import common_functions
 import user_state_statistics
+from user_state_functions import gen_per_version_headers
 import update_sheet
 import user_state_data
 import common_data
@@ -19,7 +20,9 @@ LOG_FILE = common_functions.get_log_name(argv, 'user_state.csv')
 
 # This first line of output serves as columns titles.
 LOG = open(LOG_FILE, "w")
-LOG.write("{}\n".format(user_state_data.HEADERS))
+LOG.write("{}{}\n".format(
+    user_state_data.HEADERS, gen_per_version_headers()))
+
 LOG.close()
 
 # These lists are globals for THREADS and RESULTS and need to have fixed size.
