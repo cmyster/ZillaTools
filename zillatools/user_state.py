@@ -11,7 +11,7 @@ import user_state_data
 import common_data
 
 if '--help' in argv:
-    print("{}").format(user_state_data.HELP)
+    print("{}".format(user_state_data.HELP))
     exit(0)
 
 # Setting a default name for the log file.
@@ -31,7 +31,7 @@ for user in user_state_data.USERS:
     STATS = user_state_statistics.UserStatistics(user, RESULTS, THREAD_INDEX)
     THREADS[THREAD_INDEX] = Thread(target=STATS.run)
     THREADS[THREAD_INDEX].daemon = True
-    print("Starting thread for {}").format(user)
+    print("Starting thread for {}".format(user))
     THREADS[THREAD_INDEX].start()
     THREAD_INDEX += 1
 
@@ -39,10 +39,10 @@ print("Waiting for threads to finish.")
 for index in range(len(THREADS)):
     THREADS[index].join()
 
-print("Writing to {}").format(LOG_FILE)
+print("Writing to {}".format(LOG_FILE))
 LOG = open("{}".format(LOG_FILE), "a")
 LOG.write("".join(RESULTS))
-LOG.write("{}").format(common_functions.get_time_now())
+LOG.write("\n{}\n".format(common_functions.get_time_now()))
 LOG.close()
 
 UPDATE = update_sheet.UpdateSheet(

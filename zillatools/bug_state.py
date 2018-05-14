@@ -7,17 +7,17 @@ from threading import Thread
 from sys import argv
 import bug_state_statistics
 import update_sheet
+import common_functions
 from bug_state_functions import get_totals
-from common_functions import get_log_name
 import bug_state_data
 import common_data
 
 if '--help' in argv:
-    print ('{}').format(bug_state_data.HELP)
+    print("{}".format(bug_state_data.HELP))
     exit(0)
 
 # Setting a default name for the CSV file.
-LOG_FILE = get_log_name(argv, 'bug_state.csv')
+LOG_FILE = common_functions.get_log_name(argv, 'bug_state.csv')
 
 # This first line of output serves as columns titles.
 LOG = open(LOG_FILE, "w")
@@ -35,24 +35,26 @@ for dfg in common_data.DFGS:
             version, dfg, RESULTS, THREAD_INDEX)
         THREADS[THREAD_INDEX] = Thread(target=STATS.main)
         THREADS[THREAD_INDEX].daemon = True
-        print ('Starting thread for {} in {}').format(dfg, version[0])
+        print("Starting thread for {} in {}".format(dfg, version[0]))
         THREADS[THREAD_INDEX].start()
         THREAD_INDEX += 1
 
-print ('Waiting for threads to finish.')
+print("Waiting for threads to finish.")
 for index in range(len(THREADS)):
     THREADS[index].join()
 
-print ('Writing to {}').format(LOG_FILE)
+print("Writing to {}".format(LOG_FILE))
 LOG = open("{}".format(LOG_FILE), "a")
 LOG.write("".join(RESULTS))
 LOG.close()
 
 for version in common_data.VERSIONS:
-    log = open("{}".format(LOG_FILE), "a")
-    totals = get_totals(LOG_FILE, version[0], len(common_data.DFGS))
-    log.write("Total averages, {},{}\n".format(version[0], totals))
-    log.close()
+    LOG = open("{}".format(LOG_FILE), "a")
+    TOTALS = get_totals(LOG_FILE, version[0], len(common_data.DFGS))
+    LOG.write("Total averages, {},{}\n".format(version[0], TOTALS))
+
+LOG.write("\n{}\n".format(common_functions.get_time_now()))
+LOG.close()
 
 UPDATE = update_sheet.UpdateSheet(
     bug_state_data.SHEET,
@@ -65,4 +67,4 @@ UPDATE = update_sheet.UpdateSheet(
 UPDATE()
 
 # Finally
-print ("DONE!")
+print("DONE!")
