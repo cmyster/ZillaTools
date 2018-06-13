@@ -76,7 +76,7 @@ class BugStatistics:
                 If the lower limit of the stages above is not the newest for
                 that stage, it means that the bug was re-opened or failed QA.
                 status_times is a dict (unsortable), so to make sure that
-                a status is the youngest for a certain range, we remove the 
+                a status is the youngest for a certain range, we remove the
                 next statuses for the next stages and test the time.
                 """
 

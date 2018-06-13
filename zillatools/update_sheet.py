@@ -5,6 +5,7 @@ from apiclient import discovery
 from oauth2client import client
 from oauth2client import tools
 from oauth2client.file import Storage
+from common_data import BASE_SHEET
 
 
 class UpdateSheet:
@@ -94,7 +95,7 @@ class UpdateSheet:
         clears and re-creates a sheet using data CSV.
         :rtype: None
         """
-        print 'Updating google sheet at ' \
-              'https://docs.google.com/spreadsheets/d/{}'.format(self.sheet_id)
+        print("Updating google sheet at {}/{}".format(
+            BASE_SHEET, self.sheet_id))
         self.clear_range()
         self.update_from_csv()
