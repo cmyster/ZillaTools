@@ -3,8 +3,10 @@
 This script goes over lists of bugs per predefined bugzilla query and outputs
 a CSV with data to be digested elsewhere.
 """
-from threading import Thread
+from os import path
+from os import remove
 from sys import argv
+from threading import Thread
 import bug_state_statistics
 import update_sheet
 import common_functions
@@ -18,11 +20,8 @@ if '--help' in argv:
 
 # Setting a default name for the CSV file.
 LOG_FILE = common_functions.get_log_name(argv, 'bug_state.csv')
-
-# This first line of output serves as columns titles.
-LOG = open(LOG_FILE, "w")
-LOG.write("{}\n".format(bug_state_data.HEADERS))
-LOG.close()
+if path.isfile(LOG_FILE):
+    remove(LOG_FILE)
 
 # These lists are globals for THREADS and RESULTS and need to have fixed size.
 THREADS = [None] * len(common_data.DFGS) * len(common_data.VERSIONS)
@@ -45,6 +44,7 @@ for index in range(len(THREADS)):
 
 print("Writing to {}".format(LOG_FILE))
 LOG = open("{}".format(LOG_FILE), "a")
+LOG.write("{}\n".format(bug_state_data.HEADERS))
 LOG.write("".join(RESULTS))
 LOG.close()
 

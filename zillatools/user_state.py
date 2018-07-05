@@ -2,8 +2,10 @@
 """
 This script goes over individual contributes and fetches data and statistics.
 """
-from threading import Thread
+from os import path
+from os import remove
 from sys import argv
+from threading import Thread
 import common_functions
 import user_state_statistics
 from user_state_functions import gen_per_version_headers
@@ -17,13 +19,8 @@ if '--help' in argv:
 
 # Setting a default name for the log file.
 LOG_FILE = common_functions.get_log_name(argv, 'user_state.csv')
-
-# This first line of output serves as columns titles.
-LOG = open(LOG_FILE, "w")
-LOG.write("{}{}\n".format(
-    user_state_data.HEADERS, gen_per_version_headers()))
-
-LOG.close()
+if path.isfile(LOG_FILE):
+    remove(LOG_FILE)
 
 # These lists are globals for THREADS and RESULTS and need to have fixed size.
 THREADS = [None] * len(user_state_data.USERS)
@@ -44,6 +41,8 @@ for index in range(len(THREADS)):
 
 print("Writing to {}".format(LOG_FILE))
 LOG = open("{}".format(LOG_FILE), "a")
+LOG.write("{}{}\n".format(
+    user_state_data.HEADERS, gen_per_version_headers()))
 LOG.write("".join(RESULTS))
 LOG.write("\n{}\n".format(common_functions.get_time_now()))
 LOG.close()
