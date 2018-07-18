@@ -25,6 +25,7 @@ USERS = [
     'grozov',
     'iovadia',
     'jhajyahy',
+    'lnatapov',
     'mcornea',
     'mlammon',
     'nlevinki',
@@ -34,6 +35,7 @@ USERS = [
     'sasha',
     'ssmolyak',
     'ukalifon',
+    'vvoronko',
     'yprokule',
 ]
 
