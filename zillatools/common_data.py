@@ -16,8 +16,9 @@ BUG_STATUS = [
                   # for QE to test, if applicable.
     'VERIFIED',   # The bug has been verified as resolved with the build
                   # indicated in the Fixed-in-version field or a newer build.
-    'RELEASE_PENDING',  # The fix is about to be shipped.
-    'CLOSED'      # The bug has been closed.
+    'RELEASE_PENDING',  # The fix is about to be shipped in the next release.
+    'CLOSED'      # The bug has been closed, usually by errata tool at the end
+                  # end of a testing cycle.
 ]
 
 

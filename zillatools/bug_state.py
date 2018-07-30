@@ -1,4 +1,3 @@
-#!/usr/bin/python2.7
 """
 This script goes over lists of bugs per predefined bugzilla query and outputs
 a CSV with data to be digested elsewhere.
@@ -27,6 +26,7 @@ if path.isfile(LOG_FILE):
 THREADS = [None] * len(common_data.DFGS) * len(common_data.VERSIONS)
 RESULTS = [None] * len(common_data.DFGS) * len(common_data.VERSIONS)
 THREAD_INDEX = 0
+
 
 for dfg in common_data.DFGS:
     for version in common_data.VERSIONS:

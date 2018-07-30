@@ -1,4 +1,3 @@
-#!/usr/bin/python2.7
 """
 This script goes over individual contributes and fetches data and statistics.
 """

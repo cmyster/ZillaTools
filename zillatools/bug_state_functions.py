@@ -49,22 +49,40 @@ def get_totals(logfile, version, dfgs):
 
     total = 0
     goods = 0
+    assigned = 0
+    on_dev = 0
+    post = 0
+    modified = 0
     on_qa = 0
-    verify = 0
+    verified = 0
+    pending = 0
     close = 0
     with open(logfile, 'r') as log:
         for line in log:
             if version in line.split(",")[1]:
                 total += int(line.split(",")[2])
                 goods += int(line.split(",")[3])
-                on_qa += int(line.split(",")[4])
-                verify += int(line.split(",")[5])
-                close += int(line.split(",")[6])
+                assigned += int(line.split(",")[4])
+                on_dev += int(line.split(",")[5])
+                post += int(line.split(",")[6])
+                modified += int(line.split(",")[7])
+                on_qa += int(line.split(",")[8])
+                verified += int(line.split(",")[9])
+                pending += int(line.split(",")[10])
+                close += int(line.split(",")[11])
     log.close()
 
     if dfgs == 0:
-        return '0,0,0,0,0'
+        return '0,0,0,0,0,0,0,0,0,0'
     else:
-        return '{},{},{},{},{}'.format(
-            total / dfgs, goods / dfgs, on_qa / dfgs, verify / dfgs,
+        return '{},{},{},{},{},{},{},{},{},{}'.format(
+            total / dfgs,
+            goods / dfgs,
+            assigned / dfgs,
+            on_dev / dfgs,
+            post / dfgs,
+            post / dfgs,
+            on_qa / dfgs,
+            verified / dfgs,
+            pending / dfgs,
             close / dfgs)
