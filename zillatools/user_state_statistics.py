@@ -76,7 +76,7 @@ class UserStatistics:
         for version in common_data.VERSIONS:
             q_reported = user_state_functions.get_reported_query(
                 self.user,
-                version[0],
+                version,
             )
             b_reported = bz_client.query(q_reported)
 

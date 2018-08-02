@@ -64,7 +64,8 @@ def get_reported_query(username, version):
         f1='reporter',
         o1='equals',
         v1='{}{}'.format(username, common_data.RHDT),
-        version='{}'.format(version),
+        chfieldfrom='{}'.format(version[1]),
+        chfieldto='{}'.format(version[2]),
     )
 
     return query
