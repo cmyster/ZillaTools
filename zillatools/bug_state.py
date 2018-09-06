@@ -50,7 +50,7 @@ LOG.close()
 
 for version in common_data.VERSIONS:
     LOG = open("{}".format(LOG_FILE), "a")
-    TOTALS = get_totals(LOG_FILE, version[0], len(common_data.DFGS))
+    TOTALS = get_totals(LOG_FILE, version[0])
     LOG.write("Total averages, {},{}\n".format(version[0], TOTALS))
 
 LOG.write("\n{}\n".format(common_functions.get_time_now()))
