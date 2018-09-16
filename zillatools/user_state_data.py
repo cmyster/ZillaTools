@@ -40,10 +40,8 @@ USERS = [
 ]
 
 # Userstate CSV headers
-HEADERS = 'UserID,'\
-    'ON_QA,link,'\
-    'Open bugs,link,'\
-    'needinfo,link,'
+HEADERS = 'UserID,ON_QA,link,Assigned bugs,link,needinfo,link,Total opened,' \
+          'link'
 
 # Google sheet that holds user statistics.
 SHEET = '11WTyjmbgU1K98xu_8TnhjPrAjmDb2uEmUD4PJ5xkML4'

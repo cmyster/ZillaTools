@@ -85,6 +85,22 @@ def get_needinfo_query(username):
     return query
 
 
+def get_all_opened(username):
+    # type: (str) -> dict
+    """
+    Return a query for all the bugs that a username have opened.
+    :param username: str
+    :rtype: dict
+    """
+    query = dict(
+        f1='reporter',
+        o1='equals',
+        v1='{}{}'.format(username, common_data.RHDT)
+    )
+
+    return query
+
+
 def gen_per_version_headers():
     # type: (none) -> str
     """
