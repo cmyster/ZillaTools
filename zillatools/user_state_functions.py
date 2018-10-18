@@ -64,6 +64,7 @@ def get_reported_query(username, version):
         f1='reporter',
         o1='equals',
         v1='{}{}'.format(username, common_data.RHDT),
+        chfield='[Bug creation]',
         chfieldfrom='{}'.format(version[1]),
         chfieldto='{}'.format(version[2]),
     )

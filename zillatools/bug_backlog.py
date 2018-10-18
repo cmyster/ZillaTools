@@ -30,7 +30,7 @@ THREAD_INDEX = 0
 # Getting the weeks to work on, and these serve as CSV headers as well.
 dates = common_functions.get_weeks_dates(common_data.START_DATE)
 
-# Creating working hreads.
+# Creating working threads.
 for dfg in common_data.DFGS:
     STATS = bug_backlog_statistics.BacklogStatistics(
         dfg, dates, RESULTS, THREAD_INDEX)
