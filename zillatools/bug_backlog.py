@@ -28,12 +28,12 @@ RESULTS = [None] * len(common_data.DFGS)
 THREAD_INDEX = 0
 
 # Getting the weeks to work on, and these serve as CSV headers as well.
-dates = common_functions.get_weeks_dates(common_data.START_DATE)
+DATES = common_functions.get_weeks_dates(common_data.START_DATE)
 
 # Creating working threads.
 for dfg in common_data.DFGS:
     STATS = bug_backlog_statistics.BacklogStatistics(
-        dfg, dates, RESULTS, THREAD_INDEX)
+        dfg, DATES, RESULTS, THREAD_INDEX)
     THREADS[THREAD_INDEX] = Thread(target=STATS.main)
     THREADS[THREAD_INDEX].daemon = True
     print("Starting thread for {}".format(dfg))
@@ -47,7 +47,7 @@ for index in range(len(THREADS)):
 # Writing the results into the CSV.
 print("Writing to {}".format(LOG_FILE))
 LOG = open("{}".format(LOG_FILE), "a")
-LOG.write('DFG,{}\n'.format(','.join(map(str, dates))))
+LOG.write('DFG,{}\n'.format(','.join(map(str, DATES))))
 LOG.write("".join(RESULTS))
 LOG.write("\n{}\n".format(common_functions.get_time_now()))
 LOG.close()
